@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
 import {
+  Sun, 
+  Heart,
   Brain,
   Image,
   MessageSquare,
@@ -19,19 +21,9 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
   const [notes, setNotes] = useState("");
 
   const activities = [
-    {
-      title: "Problem Cards",
-      icon: MessageSquare,
-      color: "var(--pastel-lavender)",
-      id: "problem-cards",
-    },
-    {
-      title: "Rorschach Test",
-      icon: Image,
-      color: "var(--pastel-sky)",
-      id: "rorschach",
-    },
-    { title: "TAT Test", icon: Brain, color: "var(--pastel-mint)", id: "tat" },
+    { title: "Problem Cards", icon: MessageSquare, color: "var(--pastel-lavender)", id: "problem-cards" },
+    { title: "Do you believe in yourself?", icon: Heart, color: "var(--pastel-sky)", id: "self-esteem" },
+    { title: "How are you feeling", icon: Sun, color: "var(--pastel-mint)", id: "well-being" },
   ];
 
   return (

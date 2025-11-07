@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { MainOffice } from "./components/MainOffice";
 import { ProblemSelection } from "./components/ProblemSelection";
 import { QuestionFlow } from "./components/QuestionFlow";
-import { RorschachTest } from "./components/RorschachTest";
-import { TATTest } from "./components/TATTest";
+import { SelfEsteemTest } from "./components/SelfEsteemTest";
+import { WellBeingTest } from "./components/WellBeingTest";
 import { AnalysisReport } from "./components/AnalysisReport";
 import { BookingFlow } from "./components/BookingFlow";
 import { Dashboard } from "./components/Dashboard";
@@ -12,13 +12,13 @@ type Screen =
   | "main-office"
   | "problem-selection"
   | "question-flow"
-  | "rorschach"
-  | "tat"
+  | "self-esteem"
+  | "well-being"
   | "analysis"
   | "booking"
   | "dashboard";
 
-type ActivityType = "problem-cards" | "rorschach" | "tat";
+type ActivityType = "problem-cards" | "self-esteem" | "well-being";
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>("main-office");
@@ -30,12 +30,12 @@ export default function App() {
     if (activityId === "problem-cards") {
       setCurrentActivity("problem-cards");
       setCurrentScreen("problem-selection");
-    } else if (activityId === "rorschach") {
-      setCurrentActivity("rorschach");
-      setCurrentScreen("rorschach");
-    } else if (activityId === "tat") {
-      setCurrentActivity("tat");
-      setCurrentScreen("tat");
+    } else if (activityId === "self-esteem") {
+      setCurrentActivity("self-esteem");
+      setCurrentScreen("self-esteem");
+    } else if (activityId === "well-being") {
+      setCurrentActivity("well-being");
+      setCurrentScreen("well-being");
     }
   };
 
@@ -49,13 +49,15 @@ export default function App() {
     setCurrentScreen("analysis");
   };
 
-  const handleRorschachComplete = (responses: string[]) => {
-    setActivityAnswers(responses);
+  const handleSelfEsteemComplete = (responses: number[]) => {
+    // Convert numbers to strings for compatibility with AnalysisReport
+    setActivityAnswers(responses.map(String));
     setCurrentScreen("analysis");
   };
 
-  const handleTATComplete = (responses: string[]) => {
-    setActivityAnswers(responses);
+  const handleWellBeingComplete = (responses: number[]) => {
+    // Convert numbers to strings for compatibility with AnalysisReport
+    setActivityAnswers(responses.map(String));
     setCurrentScreen("analysis");
   };
 
@@ -103,16 +105,16 @@ export default function App() {
         />
       )}
 
-      {currentScreen === "rorschach" && (
-        <RorschachTest
-          onComplete={handleRorschachComplete}
+      {currentScreen === "self-esteem" && (
+        <SelfEsteemTest
+          onComplete={handleSelfEsteemComplete}
           onBack={() => setCurrentScreen("main-office")}
         />
       )}
 
-      {currentScreen === "tat" && (
-        <TATTest
-          onComplete={handleTATComplete}
+      {currentScreen === "well-being" && (
+        <WellBeingTest
+          onComplete={handleWellBeingComplete}
           onBack={() => setCurrentScreen("main-office")}
         />
       )}
