@@ -3,7 +3,8 @@
 :root {
   --font-size: 16px;
   --background: #faf8f6;
-  --foreground: #4a4458;
+  /* Slightly darkened foreground for improved contrast */
+  --foreground: #3e374c;
   --card: #ffffff;
   --card-foreground: #4a4458;
   --popover: #ffffff;
@@ -13,12 +14,14 @@
   --secondary: #d4c5f9;
   --secondary-foreground: #4a4458;
   --muted: #f0ede8;
-  --muted-foreground: #9b8fa4;
+  /* Adjust muted foreground for AA contrast */
+  --muted-foreground: #7d728a;
   --accent: #e8f5e9;
   --accent-foreground: #4a4458;
   --destructive: #ff9494;
   --destructive-foreground: #ffffff;
-  --border: rgba(139, 127, 184, 0.15);
+  /* Increase border visibility slightly */
+  --border: rgba(139, 127, 184, 0.22);
   --input: transparent;
   --input-background: #fdfcfb;
   --switch-background: #e0d5f3;
@@ -52,6 +55,8 @@
   --shadow-soft: 0 2px 12px rgba(139, 127, 184, 0.08);
   --shadow-medium: 0 4px 24px rgba(139, 127, 184, 0.12);
   --shadow-large: 0 8px 40px rgba(139, 127, 184, 0.15);
+  /* New focus outline color */
+  --focus-outline: #3e374c;
 }
 
 .dark {
