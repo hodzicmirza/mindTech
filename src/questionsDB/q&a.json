@@ -1,0 +1,131 @@
+{
+  "tests": {
+    "anxiety": [
+      {
+        "question": "When you think of the word stress, what is the first word that comes to your mind?",
+        "answers": [
+          {
+            "answer": "Work",
+            "description": "Your main source of stress comes from a sense of responsibility.",
+            "suggestion": "Set clear boundaries between your obligations and your rest time."
+          },
+          {
+            "answer": "People",
+            "description": "Your anxiety often comes from social situations.",
+            "suggestion": "Work on gradually exposing yourself to social interactions."
+          },
+          {
+            "answer": "Failure",
+            "description": "You are afraid of making mistakes and being judged.",
+            "suggestion": "Focus on progress instead of perfection."
+          },
+          {
+            "answer": "Nervousness",
+            "description": "You are aware of your inner restlessness.",
+            "suggestion": "Practice breathing techniques to help calm your mind."
+          }
+        ]
+      },
+      {
+        "question": "When you hear the word future, what is the first word that comes to your mind?",
+        "answers": [
+          {
+            "answer": "Fear",
+            "description": "You experience strong anticipatory anxiety about what is coming.",
+            "suggestion": "Focus on the present moment and take small steps forward."
+          },
+          {
+            "answer": "Hope",
+            "description": "You maintain a positive outlook even under stress.",
+            "suggestion": "Keep nurturing this mindset through small daily achievements."
+          },
+          {
+            "answer": "Uncertainty",
+            "description": "You feel a lack of control over what will happen next.",
+            "suggestion": "Make plans that depend on your own actions and decisions."
+          },
+          {
+            "answer": "Change",
+            "description": "You feel anxious about adapting to new situations.",
+            "suggestion": "Work on becoming more flexible by taking small steps of change."
+          }
+        ]
+      },
+      {
+        "question": "What is the first word that comes to your mind when you hear peace?",
+        "answers": [
+          {
+            "answer": "Silence",
+            "description": "You are searching for inner balance and calmness.",
+            "suggestion": "Try mindful breathing or walking without music."
+          },
+          {
+            "answer": "Restlessness",
+            "description": "It is difficult for you to relax completely.",
+            "suggestion": "Practice relaxation techniques regularly."
+          },
+          {
+            "answer": "Sleep",
+            "description": "Your mind is seeking rest and escape.",
+            "suggestion": "Make sure to maintain a consistent sleep schedule and bedtime routine."
+          },
+          {
+            "answer": "Nature",
+            "description": "You associate peace with being outdoors.",
+            "suggestion": "Spend more time outside and connect with nature."
+          }
+        ]
+      },
+      {
+        "question": "When you hear the word decision, what is the first word that comes to your mind?",
+        "answers": [
+          {
+            "answer": "Difficult",
+            "description": "This shows uncertainty and overanalyzing.",
+            "suggestion": "Start making small decisions every day to build confidence."
+          },
+          {
+            "answer": "Fear",
+            "description": "You are afraid of making the wrong choice.",
+            "suggestion": "Remind yourself that no decision is final and you can always adjust later."
+          },
+          {
+            "answer": "Panic",
+            "description": "You tend to react impulsively when under pressure.",
+            "suggestion": "Take a short break before making important choices."
+          },
+          {
+            "answer": "Clarity",
+            "description": "You feel confident when your goals are clear.",
+            "suggestion": "Maintain focus through careful planning."
+          }
+        ]
+      },
+      {
+        "question": "When you think of the word night, what is the first word that comes to your mind?",
+        "answers": [
+          {
+            "answer": "Worries",
+            "description": "Your mind becomes active before sleep.",
+            "suggestion": "Write down your thoughts before bed to clear your mind."
+          },
+          {
+            "answer": "Silence",
+            "description": "You find peace when everything is quiet.",
+            "suggestion": "Play soft music or meditate before sleeping."
+          },
+          {
+            "answer": "Restlessness",
+            "description": "You have difficulty switching off at night.",
+            "suggestion": "Set a routine to turn off screens before bedtime."
+          },
+          {
+            "answer": "Sleep",
+            "description": "You feel mentally exhausted from overthinking.",
+            "suggestion": "Include relaxing activities in your evening routine."
+          }
+        ]
+      }
+    ]
+  }
+}

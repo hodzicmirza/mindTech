@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { QuestionCard } from "./QuestionCard";
 import { SmallWinModal } from "./SmallWinModal";
 import { ArrowLeft } from "lucide-react";
+import questionsData from "../questionsDB/q&a.json";
 
 interface QuestionFlowProps {
   problem: string;
   onComplete: (answers: string[]) => void;
   onBack: () => void;
+}
+
+interface QuestionData {
+  question: string;
+  answers: Array<{
+    answer: string;
+    description: string;
+    suggestion: string;
+  }>;
 }
 
 const encouragements = [
@@ -25,18 +35,23 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [showWinModal, setShowWinModal] = useState(false);
+  const [questions, setQuestions] = useState<QuestionData[]>([]);
 
-  // Generate questions based on the problem
-  const questions = [
-    `How do you feel most mornings about ${problem.toLowerCase()}?`,
-    `What word describes your biggest challenge with ${problem.toLowerCase()}?`,
-    "When do you feel most at peace?",
-    "What emotion comes up most often?",
-    "How would you describe your sleep lately?",
-    "What gives you energy?",
-    "What drains your energy?",
-    "If you could change one thing, what would it be?",
-  ];
+  // Map problem label to JSON key
+  const getProblemKey = (problemLabel: string): string => {
+    const key = problemLabel.toLowerCase();
+    if (key === "anxiety" || key === "depression" || key === "adhd") {
+      return key;
+    }
+    // Default to anxiety if custom problem
+    return "anxiety";
+  };
+
+  useEffect(() => {
+    const problemKey = getProblemKey(problem);
+    const categoryQuestions = (questionsData as { tests: Record<string, QuestionData[]> }).tests[problemKey] || [];
+    setQuestions(categoryQuestions);
+  }, [problem]);
 
   const handleNext = (answer: string) => {
     const newAnswers = [...answers, answer];
@@ -53,6 +68,14 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
     setShowWinModal(false);
     onComplete(answers);
   };
+
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6] flex items-center justify-center">
+        <p className="text-muted-foreground">Loading questions...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6] flex flex-col">
@@ -79,7 +102,8 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
         <AnimatePresence mode="wait">
           <QuestionCard
             key={currentCardIndex}
-            question={questions[currentCardIndex]}
+            question={questions[currentCardIndex]?.question || ""}
+            answerOptions={questions[currentCardIndex]?.answers || []}
             currentCard={currentCardIndex + 1}
             totalCards={questions.length}
             onNext={handleNext}
