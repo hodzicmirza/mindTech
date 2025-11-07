@@ -94,27 +94,32 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         </motion.div>
       </nav>
 
-      {/* Chat panel (bottom-left) */}
+      {/* Chat panel – force bottom-left positioning */}
       <motion.aside
         role="dialog"
         aria-label="Notes"
         aria-modal="false"
-        className="fixed left-4 bottom-4 z-50 w-full max-w-md"
-        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+        className="fixed z-50 w-full max-w-md"
+        initial={{ opacity: 0, scale: 0.98 }}
         animate={{
           opacity: notesOpen ? 1 : 0,
-          y: notesOpen ? 0 : 8,
           scale: notesOpen ? 1 : 0.98,
         }}
         transition={{ type: "spring", stiffness: 260, damping: 22 }}
-        style={{ pointerEvents: notesOpen ? "auto" : "none" }}
+        style={{
+          pointerEvents: notesOpen ? "auto" : "none",
+          left: 16,
+          bottom: 16,
+          top: "auto",
+          right: "auto",
+        }}
       >
-        <div className="w-full rounded-2xl p-4 bg-white/70 backdrop-blur shadow-2xl border-2 border-border flex flex-col gap-3">
-          {/* Avatar relocated into panel (left) when open */}
+        <div className="w-full rounded-2xl p-4 bg-white/80 backdrop-blur shadow-2xl border-2 border-border flex flex-col gap-3 will-change-transform">
+          {/* Avatar relocated in to panel (left) when open */}
           <div className="flex items-start gap-3">
             <motion.div
               layoutId="session-avatar"
-              className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl"
+              className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl shrink-0"
             >
               <ImageWithFallback
                 src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=512&q=80"
