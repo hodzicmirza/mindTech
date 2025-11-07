@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
-import { Brain, Heart, MessageSquare, HelpCircle, Sparkles } from "lucide-react";
+import { Sun, Heart, MessageSquare, HelpCircle, Sparkles } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 interface MainOfficeProps {
@@ -15,7 +15,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
   const activities = [
     { title: "Problem Cards", icon: MessageSquare, color: "var(--pastel-lavender)", id: "problem-cards" },
     { title: "Do you believe in yourself?", icon: Heart, color: "var(--pastel-sky)", id: "self-esteem" },
-    { title: "TAT Test",       icon: Brain,          color: "var(--pastel-mint)",     id: "tat" },
+    { title: "How are you feeling", icon: Sun, color: "var(--pastel-mint)", id: "well-being" },
   ];
 
   return (
