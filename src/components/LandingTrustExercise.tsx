@@ -247,7 +247,7 @@ export default function LandingTrustExercise({ onStart }: Props) {
             className="text-base font-light"
             style={{ color: "var(--text-primary)" }}
           >
-            Nice! You're already making progress! Keep it up!
+            Nice! You’ve already done something good for yourself today.
           </h3>
           <p
             className="text-sm font-light"
@@ -264,7 +264,7 @@ export default function LandingTrustExercise({ onStart }: Props) {
                 boxShadow: "var(--shadow-sm)",
               }}
             >
-             Let's talk
+             Start free
             </button>
           </div>
           <p
