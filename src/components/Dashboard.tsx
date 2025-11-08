@@ -19,21 +19,40 @@ import {
 } from "lucide-react";
 import { ConfettiEffect } from "./ConfettiEffect";
 
-interface DashboardProps {
-  onBackToHome: () => void;
+interface BookingDetails {
+  sessionType: "in-person" | "online";
+  date: Date;
+  time: string;
 }
 
-export function Dashboard({ onBackToHome }: DashboardProps) {
+interface DashboardProps {
+  onBackToHome: () => void;
+  bookingDetails: BookingDetails | null;
+}
+
+export function Dashboard({ onBackToHome, bookingDetails }: DashboardProps) {
   const [completedItems, setCompletedItems] = useState<number[]>([]);
   const [showConfetti, setShowConfetti] = useState(false);
   const [sectionCompleted, setSectionCompleted] = useState(false);
 
-  const upcomingSession = {
-    date: "November 14, 2025",
-    time: "2:00 PM",
-    type: "online",
-    psychologist: "Dr. Sarah Chen",
-  };
+  // Use booking details if available, otherwise use default
+  const upcomingSession = bookingDetails
+    ? {
+        date: bookingDetails.date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+        time: bookingDetails.time,
+        type: bookingDetails.sessionType,
+        psychologist: "Dr. Sarah Chen",
+      }
+    : {
+        date: "November 14, 2025",
+        time: "2:00 PM",
+        type: "online" as const,
+        psychologist: "Dr. Sarah Chen",
+      };
 
   const talkingPoints = [
     "Explored feelings about anxiety and stress management",

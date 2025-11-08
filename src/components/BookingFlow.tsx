@@ -14,8 +14,14 @@ import {
 } from "lucide-react";
 import { ConfettiEffect } from "./ConfettiEffect";
 
+interface BookingDetails {
+  sessionType: "in-person" | "online";
+  date: Date;
+  time: string;
+}
+
 interface BookingFlowProps {
-  onComplete: () => void;
+  onComplete: (details: BookingDetails) => void;
   onBack: () => void;
 }
 
@@ -40,10 +46,16 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
   ];
 
   const handleConfirmBooking = () => {
-    setShowConfetti(true);
-    setTimeout(() => {
-      onComplete();
-    }, 2000);
+    if (sessionType && selectedDate && selectedTime) {
+      setShowConfetti(true);
+      setTimeout(() => {
+        onComplete({
+          sessionType,
+          date: selectedDate,
+          time: selectedTime,
+        });
+      }, 2000);
+    }
   };
 
   const canContinueStep1 = sessionType !== null;
@@ -313,7 +325,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                 <Button
                   onClick={() => setStep(2)}
                   disabled={!canContinueStep1}
-                  className="h-12 px-10 rounded-2xl text-sm font-light transition-all disabled:opacity-40 border-0"
+                  className="h-12 px-10 rounded-2xl text-sm font-light transition-all disabled:opacity-40 border-0 cursor-pointer"
                   style={{
                     backgroundColor: canContinueStep1
                       ? "var(--color-sage)"

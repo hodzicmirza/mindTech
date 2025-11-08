@@ -167,7 +167,7 @@ export function ProblemSelection({
             };
 
             // button class
-            const buttonClass = `p-6 rounded-2xl border-2 transition-all relative ${
+            const buttonClass = `p-6 cursor-pointer rounded-2xl border-2 transition-all relative ${
               isSelected
                 ? "shadow-md"
                 : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
@@ -346,7 +346,7 @@ export function ProblemSelection({
           }}
         >
           {isGenerating ? (
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex items-center justify-center gap-2 cursor-pointer">
               <Loader2 className="w-5 h-5 animate-spin" />
               <span>Generating questions...</span>
             </div>
