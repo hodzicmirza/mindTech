@@ -610,7 +610,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                     className="text-xs font-light mt-4"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    You'll receive a confirmation email with session details
+                    You'll receive a confirmation SMS with session details
                   </p>
                 </motion.div>
               </Card>
