@@ -280,6 +280,68 @@
           }
         ]
       }
+    ],
+    "well-being": [
+      {
+        "question": "I have felt cheerful and in good spirits.",
+        "answers": 
+        [
+          { "answer": "At no time", "description": "You have not felt cheerful and in good spirits.", "suggestion": "Try to find activities that make you feel good." },
+          { "answer": "Some of the time", "description": "You have felt cheerful and in good spirits some of the time.", "suggestion": "Try to find activities that make you feel good." },
+          { "answer": "Less than half the time", "description": "You have felt cheerful and in good spirits less than half the time.", "suggestion": "Try to make time for activities that make you feel good." },
+          { "answer": "More than half the time", "description": "You have felt cheerful and in good spirits more than half the time.", "suggestion": "Try to find activities that make you feel good." },
+          { "answer": "Most of the time", "description": "You have felt cheerful and in good spirits most of the time.", "suggestion": "Keep up activities that make you feel good." },
+          { "answer": "All of the time", "description": "You have felt cheerful and in good spirits all of the time.", "suggestion": "Good work, keep up activities that make you feel good." }
+        ]
+      },
+      {
+        "question": "I have felt calm and relaxed.",
+        "answers": 
+        [
+          { "answer": "At no time", "description": "You have not felt calm and relaxed.", "suggestion": "Try to find activities that make you feel calm and relaxed." },
+          { "answer": "Some of the time", "description": "You have felt calm and relaxed some of the time.", "suggestion": "Try to find activities that make you feel calm and relaxed." },
+          { "answer": "Less than half the time", "description": "You have felt calm and relaxed less than half the time.", "suggestion": "Try to make time for activities that make you feel calm and relaxed." },
+          { "answer": "More than half the time", "description": "You have felt calm and relaxed more than half the time.", "suggestion": "Try to find activities that make you feel calm and relaxed." },
+          { "answer": "Most of the time", "description": "You have felt calm and relaxed most of the time.", "suggestion": "Keep up activities that make you feel calm and relaxed." },
+          { "answer": "All of the time", "description": "You have felt calm and relaxed all of the time.", "suggestion": "Good work, keep up activities that make you feel calm and relaxed." }
+        ]
+      },
+      {
+        "question": "I have felt active and vigorous.",
+        "answers": 
+        [
+          { "answer": "At no time", "description": "You have not felt active and vigorous.", "suggestion": "Try to find activities that make you feel active and vigorous." },
+          { "answer": "Some of the time", "description": "You have felt active and vigorous some of the time.", "suggestion": "Try to find activities that make you feel active and vigorous." },
+          { "answer": "Less than half the time", "description": "You have felt active and vigorous less than half the time.", "suggestion": "Try to make time for activities that make you feel active and vigorous." },
+          { "answer": "More than half the time", "description": "You have felt active and vigorous more than half the time.", "suggestion": "Try to find activities that make you feel active and vigorous." },
+          { "answer": "Most of the time", "description": "You have felt active and vigorous most of the time.", "suggestion": "Keep up activities that make you feel active and vigorous." },
+          { "answer": "All of the time", "description": "You have felt active and vigorous all of the time.", "suggestion": "Good work, keep up activities that make you feel active and vigorous." }
+        ]
+      },
+      {
+        "question": "I woke up feeling fresh and rested.",
+        "answers": 
+        [
+          { "answer": "At no time", "description": "You have not felt fresh and rested.", "suggestion": "Try to find activities that make you feel fresh and rested." },
+          { "answer": "Some of the time", "description": "You have felt fresh and rested some of the time.", "suggestion": "Try to find activities that make you feel fresh and rested." },
+          { "answer": "Less than half the time", "description": "You have felt fresh and rested less than half the time.", "suggestion": "Try to make time for activities that make you feel fresh and rested." },
+          { "answer": "More than half the time", "description": "You have felt fresh and rested more than half the time.", "suggestion": "Try to find activities that make you feel fresh and rested." },
+          { "answer": "Most of the time", "description": "You have felt fresh and rested most of the time.", "suggestion": "Keep up activities that make you feel fresh and rested." },
+          { "answer": "All of the time", "description": "You have felt fresh and rested all of the time.", "suggestion": "Good work, keep up activities that make you feel fresh and rested." }
+        ]
+      },
+      {
+        "question": "My daily life has been filled with things that interest me.",
+        "answers": 
+        [
+          { "answer": "At no time", "description": "Your daily life has not been filled with things that interest you.", "suggestion": "Try to find activities that make you feel interested." },
+          { "answer": "Some of the time", "description": "Your daily life has been filled with things that interest you some of the time.", "suggestion": "Try to find activities that make you feel interested." },
+          { "answer": "Less than half the time", "description": "Your daily life has been filled with things that interest you less than half the time.", "suggestion": "Try to make time for activities that make you feel interested." },
+          { "answer": "More than half the time", "description": "Your daily life has been filled with things that interest you more than half the time.", "suggestion": "Try to find activities that make you feel interested." },
+          { "answer": "Most of the time", "description": "Your daily life has been filled with things that interest you most of the time.", "suggestion": "Keep up activities that make you feel interested." },
+          { "answer": "All of the time", "description": "Your daily life has been filled with things that interest you all of the time.", "suggestion": "Good work, keep up activities that make you feel interested." }
+        ]
+      }
     ]
   }
 }
