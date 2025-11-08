@@ -4,7 +4,14 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
-import { Building2, Video, ArrowRight, ArrowLeft, CheckCircle2, Calendar as CalendarIcon } from "lucide-react";
+import {
+  Building2,
+  Video,
+  ArrowRight,
+  ArrowLeft,
+  CheckCircle2,
+  Calendar as CalendarIcon,
+} from "lucide-react";
 import { ConfettiEffect } from "./ConfettiEffect";
 
 interface BookingFlowProps {
@@ -14,7 +21,9 @@ interface BookingFlowProps {
 
 export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
   const [step, setStep] = useState(1);
-  const [sessionType, setSessionType] = useState<"in-person" | "online" | null>(null);
+  const [sessionType, setSessionType] = useState<"in-person" | "online" | null>(
+    null
+  );
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [includeReport, setIncludeReport] = useState(true);
@@ -41,55 +50,63 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
   const canContinueStep2 = selectedDate !== undefined && selectedTime !== null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6] p-6">
+    <div className="min-h-screen bg-[#f5f0eb] p-6">
       <ConfettiEffect trigger={showConfetti} />
-      
-      <div className="max-w-4xl mx-auto">
+
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-12 mt-8">
-          <button
+        <div className="mb-8 mt-4">
+          <motion.button
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
             onClick={step === 1 ? onBack : () => setStep(step - 1)}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-colors mb-6"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span>Back</span>
-          </button>
+            <span className="text-sm">Back</span>
+          </motion.button>
 
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="mb-4">Book Your Real Session</h1>
-            <p className="text-muted-foreground">
-              Step {step} of 3 - Let's schedule your first professional therapy session
+            <h1 className="text-2xl font-medium text-gray-800 mb-3">
+              Book Your Real Session
+            </h1>
+            <p className="text-sm text-gray-500 mb-8">
+              Step {step} of 3 - Let's schedule your first professional therapy
+              session
             </p>
 
             {/* Progress Steps */}
-            <div className="flex items-center justify-center gap-4 mt-8">
+            <div className="flex items-center justify-center gap-3 mb-12">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center gap-4">
-                  <div
-                    className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                <React.Fragment key={i}>
+                  <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: i * 0.1 }}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
                       step >= i
-                        ? "bg-primary text-white"
-                        : "bg-white border-2 border-border text-muted-foreground"
+                        ? "bg-[#8b7ba8] text-white shadow-md"
+                        : "bg-white border-2 border-gray-300 text-gray-400"
                     }`}
                   >
-                    {step > i ? (
-                      <CheckCircle2 className="w-5 h-5" />
-                    ) : (
-                      <span>{i}</span>
-                    )}
-                  </div>
+                    <span className="font-medium">{i}</span>
+                  </motion.div>
                   {i < 3 && (
-                    <div
-                      className={`w-16 h-1 rounded-full transition-colors ${
-                        step > i ? "bg-primary" : "bg-border"
-                      }`}
-                    />
+                    <div className="relative w-20 h-0.5">
+                      <div className="absolute inset-0 bg-gray-300 rounded-full"></div>
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: step > i ? "100%" : "0%" }}
+                        transition={{ duration: 0.4 }}
+                        className="absolute inset-0 bg-[#8b7ba8] rounded-full"
+                      ></motion.div>
+                    </div>
                   )}
-                </div>
+                </React.Fragment>
               ))}
             </div>
           </motion.div>
@@ -100,154 +117,159 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
           {step === 1 && (
             <motion.div
               key="step1"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="space-y-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
+              className="space-y-8"
             >
-              <h2 className="text-center mb-8">Choose Your Session Type</h2>
+              <h2 className="text-center text-lg font-medium text-gray-700 mb-8">
+                Choose Your Session Type
+              </h2>
 
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                 {/* In-Person Card */}
                 <motion.button
                   onClick={() => setSessionType("in-person")}
-                  whileHover={{ scale: 1.02, y: -4 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    transition: { duration: 0.2 },
+                  }}
                   whileTap={{ scale: 0.98 }}
-                  className={`text-left transition-all ${
-                    sessionType === "in-person" ? "ring-2 ring-primary" : ""
+                  className={`text-left transition-all rounded-3xl ${
+                    sessionType === "in-person" ? "ring-2 ring-[#8b7ba8]" : ""
                   }`}
                 >
-                  <Card
-                    className="p-8 rounded-3xl border-0 h-full"
-                    style={{ boxShadow: "var(--shadow-medium)" }}
-                  >
+                  <Card className="p-8 rounded-3xl border border-gray-200 bg-white shadow-lg h-full">
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                      style={{ backgroundColor: "var(--pastel-lavender)" }}
+                      style={{ backgroundColor: "#c8b6e2" }}
                     >
-                      <Building2 className="w-8 h-8 text-white" />
+                      <Building2 className="w-7 h-7 text-white" />
                     </div>
 
-                    <h3 className="mb-3">In-Person at Clinic</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Visit our comfortable, private office space. Perfect for those who prefer
-                      face-to-face interaction.
+                    <h3 className="text-lg font-medium text-gray-800 mb-3">
+                      In-Person at Clinic
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+                      Visit our comfortable, private office space. Perfect for
+                      those who prefer face-to-face interaction.
                     </p>
 
-                    <ul className="space-y-2 text-sm text-muted-foreground">
+                    <ul className="space-y-2.5 text-sm text-gray-600">
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         Cozy, private environment
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         Free parking available
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         Complimentary refreshments
                       </li>
                     </ul>
-
-                    {sessionType === "in-person" && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="mt-6 w-8 h-8 rounded-full bg-primary flex items-center justify-center"
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-white" />
-                      </motion.div>
-                    )}
                   </Card>
                 </motion.button>
 
                 {/* Online Card */}
                 <motion.button
                   onClick={() => setSessionType("online")}
-                  whileHover={{ scale: 1.02, y: -4 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  whileHover={{
+                    y: -8,
+                    scale: 1.02,
+                    transition: { duration: 0.2 },
+                  }}
                   whileTap={{ scale: 0.98 }}
-                  className={`text-left transition-all ${
-                    sessionType === "online" ? "ring-2 ring-primary" : ""
+                  className={`text-left transition-all rounded-3xl ${
+                    sessionType === "online" ? "ring-2 ring-[#8b7ba8]" : ""
                   }`}
                 >
-                  <Card
-                    className="p-8 rounded-3xl border-0 h-full"
-                    style={{ boxShadow: "var(--shadow-medium)" }}
-                  >
+                  <Card className="p-8 rounded-3xl border border-gray-200 bg-white shadow-lg h-full">
                     <div
                       className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6"
-                      style={{ backgroundColor: "var(--pastel-sky)" }}
+                      style={{ backgroundColor: "#a8d5f7" }}
                     >
-                      <Video className="w-8 h-8 text-white" />
+                      <Video className="w-7 h-7 text-white" />
                     </div>
 
-                    <h3 className="mb-3">Online Session</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
-                      Connect from anywhere via secure video call. Flexible and convenient for your
-                      schedule.
+                    <h3 className="text-lg font-medium text-gray-800 mb-3">
+                      Online Session
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-6 leading-relaxed">
+                      Connect from anywhere via secure video call. Flexible and
+                      convenient for your schedule.
                     </p>
 
-                    <ul className="space-y-2 text-sm text-muted-foreground">
+                    <ul className="space-y-2.5 text-sm text-gray-600">
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         Join from home
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         HIPAA-compliant video
                       </li>
                       <li className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 text-gray-400" />
                         Same-day appointments
                       </li>
                     </ul>
-
-                    {sessionType === "online" && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="mt-6 w-8 h-8 rounded-full bg-primary flex items-center justify-center"
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-white" />
-                      </motion.div>
-                    )}
                   </Card>
                 </motion.button>
               </div>
 
-              <div className="flex justify-center mt-8">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="flex justify-center mt-10"
+              >
                 <Button
                   onClick={() => setStep(2)}
                   disabled={!canContinueStep1}
-                  size="lg"
-                  className="h-14 px-8 rounded-2xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50"
+                  className="h-12 px-10 rounded-2xl text-sm font-medium transition-all disabled:opacity-40 shadow-md"
+                  style={{
+                    backgroundColor: canContinueStep1 ? "#8b7ba8" : "#d1d5db",
+                    color: "white",
+                  }}
                 >
                   Continue
-                  <ArrowRight className="w-5 h-5 ml-2" />
+                  <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
           {step === 2 && (
             <motion.div
               key="step2"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
             >
-              <h2 className="text-center mb-8">Select Date & Time</h2>
+              <h2 className="text-center text-lg font-medium text-gray-700 mb-8">
+                Select Date & Time
+              </h2>
 
-              <Card
-                className="p-8 rounded-3xl border-0 max-w-3xl mx-auto"
-                style={{ boxShadow: "var(--shadow-medium)" }}
-              >
-                <div className="grid md:grid-cols-2 gap-8">
+              <Card className="p-8 rounded-3xl border border-gray-200 bg-white shadow-lg max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-[400px_1fr] gap-8">
                   {/* Calendar */}
                   <div>
                     <div className="flex items-center gap-2 mb-4">
-                      <CalendarIcon className="w-5 h-5 text-primary" />
-                      <h3>Choose a Date</h3>
+                      <CalendarIcon className="w-5 h-5 text-[#8b7ba8]" />
+                      <h3 className="text-base font-medium text-gray-700">
+                        Choose a Date
+                      </h3>
                     </div>
                     <Calendar
                       mode="single"
@@ -260,23 +282,28 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
 
                   {/* Time Slots */}
                   <div>
-                    <h3 className="mb-4">Available Times</h3>
+                    <h3 className="text-base font-medium text-gray-700 mb-4">
+                      Available Times
+                    </h3>
                     {!selectedDate ? (
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-gray-500">
                         Please select a date first
                       </p>
                     ) : (
-                      <div className="space-y-2">
-                        {timeSlots.map((time) => (
+                      <div className="space-y-3">
+                        {timeSlots.map((time, index) => (
                           <motion.button
                             key={time}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: index * 0.05 }}
                             onClick={() => setSelectedTime(time)}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
-                            className={`w-full p-3 rounded-xl transition-all ${
+                            className={`w-full p-3 rounded-2xl transition-all text-sm font-medium ${
                               selectedTime === time
-                                ? "bg-primary text-white"
-                                : "bg-background hover:bg-muted"
+                                ? "bg-[#8b7ba8] text-white shadow-md"
+                                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                             }`}
                           >
                             {time}
@@ -287,17 +314,25 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                   </div>
                 </div>
 
-                <div className="mt-8 flex justify-center">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="mt-8 flex justify-center"
+                >
                   <Button
                     onClick={() => setStep(3)}
                     disabled={!canContinueStep2}
-                    size="lg"
-                    className="h-14 px-8 rounded-2xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50"
+                    className="h-12 px-10 rounded-2xl text-sm font-medium transition-all disabled:opacity-40 shadow-md"
+                    style={{
+                      backgroundColor: canContinueStep2 ? "#8b7ba8" : "#d1d5db",
+                      color: "white",
+                    }}
                   >
                     Continue
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
-                </div>
+                </motion.div>
               </Card>
             </motion.div>
           )}
@@ -305,70 +340,102 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
           {step === 3 && (
             <motion.div
               key="step3"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.4 }}
             >
-              <h2 className="text-center mb-8">Confirm Your Booking</h2>
+              <h2 className="text-center text-lg font-medium text-gray-700 mb-8">
+                Confirm Your Booking
+              </h2>
 
-              <Card
-                className="p-8 rounded-3xl border-0 max-w-2xl mx-auto"
-                style={{ boxShadow: "var(--shadow-medium)" }}
-              >
+              <Card className="p-8 rounded-3xl border border-gray-200 bg-white shadow-lg max-w-2xl mx-auto">
                 {/* Booking Summary */}
-                <div className="mb-8 p-6 rounded-2xl bg-background">
-                  <h3 className="mb-4">Session Details</h3>
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="mb-8 p-6 rounded-2xl bg-gray-50"
+                >
+                  <h3 className="text-base font-medium text-gray-700 mb-4">
+                    Session Details
+                  </h3>
                   <div className="space-y-3 text-sm">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Type:</span>
-                      <span className="capitalize">{sessionType}</span>
+                      <span className="text-gray-500">Type:</span>
+                      <span className="text-gray-700 capitalize">
+                        {sessionType}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Date:</span>
-                      <span>{selectedDate?.toLocaleDateString()}</span>
+                      <span className="text-gray-500">Date:</span>
+                      <span className="text-gray-700">
+                        {selectedDate?.toLocaleDateString()}
+                      </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Time:</span>
-                      <span>{selectedTime}</span>
+                      <span className="text-gray-500">Time:</span>
+                      <span className="text-gray-700">{selectedTime}</span>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Attach Report */}
-                <div className="mb-8 p-6 rounded-2xl border-2 border-primary/20">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="mb-8 p-6 rounded-2xl border-2 border-gray-200"
+                >
                   <div className="flex items-start gap-4">
                     <Checkbox
                       id="include-report"
                       checked={includeReport}
-                      onCheckedChange={(checked: boolean) => setIncludeReport(checked as boolean)}
+                      onCheckedChange={(checked: boolean) =>
+                        setIncludeReport(checked as boolean)
+                      }
                       className="mt-1"
                     />
                     <div className="flex-1">
-                      <label htmlFor="include-report" className="cursor-pointer">
-                        <p className="mb-2">Include my insight report</p>
-                        <p className="text-xs text-muted-foreground">
-                          We'll attach your insight report to this booking so your psychologist
-                          can review your responses and start your session with valuable context.
+                      <label
+                        htmlFor="include-report"
+                        className="cursor-pointer"
+                      >
+                        <p className="text-sm font-medium text-gray-700 mb-2">
+                          Include my insight report
+                        </p>
+                        <p className="text-xs text-gray-500 leading-relaxed">
+                          We'll attach your insight report to this booking so
+                          your psychologist can review your responses and start
+                          your session with valuable context.
                         </p>
                       </label>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Confirmation */}
-                <div className="text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-center"
+                >
                   <Button
                     onClick={handleConfirmBooking}
-                    size="lg"
-                    className="h-14 px-12 rounded-2xl bg-primary hover:bg-primary/90 transition-all"
+                    className="h-12 px-10 rounded-2xl text-sm font-medium transition-all shadow-md"
+                    style={{
+                      backgroundColor: "#8b7ba8",
+                      color: "white",
+                    }}
                   >
-                    <CheckCircle2 className="w-5 h-5 mr-2" />
+                    <CheckCircle2 className="w-4 h-4 mr-2" />
                     Confirm Booking
                   </Button>
-                  <p className="text-xs text-muted-foreground mt-4">
+                  <p className="text-xs text-gray-500 mt-4">
                     You'll receive a confirmation email with session details
                   </p>
-                </div>
+                </motion.div>
               </Card>
             </motion.div>
           )}
