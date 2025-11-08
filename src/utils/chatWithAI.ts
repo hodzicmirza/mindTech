@@ -1,5 +1,5 @@
 
-const API_KEY = "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";
+const API_KEY = "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";
 export const chatWithAI = async (
   message: string, 
   model: string = "openrouter/polaris-alpha"
