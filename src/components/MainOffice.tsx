@@ -3,6 +3,7 @@ import { motion } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
 import { FaTrash } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
+import  AmongUS from "./AmonUS";
 import {
   Sun,
   Heart,
@@ -143,7 +144,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         <ImageWithFallback
           src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1920&q=80"
           alt="Cozy psychotherapy office"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover 90"
         />
         <div
           className="absolute inset-0"
@@ -372,7 +373,11 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
             <img
               src="/src/public/Male1.png"
               alt="AI Agent"
-              className="w-full h-full object-cover"
+              onClick={(e)=>{
+                e.preventDefault();
+                setNotesOpen(false)
+              }}
+              className="w-full h-full object-cover cursor-pointer"
             />
           </motion.div>
         )}
@@ -425,7 +430,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           layout
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0 }}
           className={`text-center max-w-2xl w-full ${
             notesOpen ? "mt-0" : "mt-0"
           }`}
@@ -447,7 +452,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           layout
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
+          transition={{ delay: 0 }}
           className={`w-full ${notesOpen ? "mt-0" : "mt-0"} mb-3`}
         >
           <div className="relative">
@@ -465,7 +470,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                   key={activity.id}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 + index * 0.08 }}
+                  transition={{ delay: 0.35  }}
                 >
                   <ActivityCard
                     title={activity.title}
@@ -483,13 +488,15 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
+          transition={{ delay: 2 }}
           className="text-sm font-light text-center mb-8"
           style={{ color: "var(--text-secondary)" }}
         >
           Click any card to begin your personalized session
         </motion.p>
       </motion.main>
+
+      // <AmongUS/>
     </div>
   );
 }
