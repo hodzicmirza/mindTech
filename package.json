@@ -70,6 +70,6 @@
       },
       "scripts": {
             "dev": "vite",
-            "build": "vite build && cp -r ./src/public dist/"
+            "build": "vite build"
       }
 }
