@@ -36,16 +36,16 @@ export function QuestionCard({
     setHideContent(false);
   }, [question]);
 
-  const handleNext = () => {
-    if (selectedAnswer) {
-      setHideContent(true); // Hide content immediately
-      setShowEncouragement(true);
-      setTimeout(() => {
-        onNext(selectedAnswer);
-        setSelectedAnswer("");
-        setShowEncouragement(false);
-      }, 800);
-    }
+  // called when an answer is chosen -> animate + proceed
+  const handleSelect = (answer: string) => {
+    setSelectedAnswer(answer);
+    setHideContent(true); // Hide content immediately
+    setShowEncouragement(true);
+    setTimeout(() => {
+      onNext(answer);
+      setSelectedAnswer("");
+      setShowEncouragement(false);
+    }, 800);
   };
 
   return (
@@ -91,7 +91,7 @@ export function QuestionCard({
                 {answerOptions.map((option, index) => (
                   <motion.button
                     key={index}
-                    onClick={() => setSelectedAnswer(option.answer)}
+                    onClick={() => handleSelect(option.answer)}
                     whileHover={{ scale: 1.03, y: -2 }}
                     whileTap={{ scale: 0.98 }}
                     className={`min-h-[56px] px-4 py-3 rounded-2xl border-2 transition-all duration-200 text-sm font-semibold ${
@@ -105,19 +105,7 @@ export function QuestionCard({
                 ))}
               </div>
 
-              <motion.button
-                onClick={handleNext}
-                disabled={!selectedAnswer}
-                whileHover={selectedAnswer ? { scale: 1.02 } : {}}
-                whileTap={selectedAnswer ? { scale: 0.98 } : {}}
-                className={`w-full h-12 rounded-2xl font-semibold text-white transition-all duration-200 ${
-                  selectedAnswer
-                    ? "bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 shadow-lg shadow-purple-200 cursor-pointer"
-                    : "bg-gray-300 cursor-not-allowed opacity-60"
-                }`}
-              >
-                {currentCard === totalCards ? "Complete" : "Next Question"}
-              </motion.button>
+              {/* Removed explicit Next/Complete button - selection advances automatically */}
             </div>
           </>
         )}
