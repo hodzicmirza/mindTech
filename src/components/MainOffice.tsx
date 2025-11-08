@@ -42,7 +42,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
 
   // Funkcija za dobijanje putanje avatara
   const getAvatarPath = () => {
-    return currentAvatar === "male" ? "/src/public/Male1.png" : "/src/public/Female3.png";
+    return currentAvatar === "male" ? "Male1.png" : "/Female3.png";
   };
 
   // Efekt za animaciju bubble-a gore-dole
@@ -213,7 +213,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
             style={{ backgroundColor: "var(--color-lavender)" }}
           >
             <img
-              src="../src/public/ashe.png"
+              src="/ashe.png"
               alt="ASHE"
               className="w-50 h-50 object-contain"
             />

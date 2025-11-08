@@ -112,7 +112,7 @@ export default function App() {
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       <ReactPlayer
-        src={"/src/public/RelaxingBackgroundMusic.mp3"} // Path to your audio file
+        src={"/RelaxingBackgroundMusic.mp3"} // Path to your audio file
         playing={true} // Start playing
         loop={true}   // Continuous playback
         volume={0.3}  // Set desired volume

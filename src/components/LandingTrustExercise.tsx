@@ -216,7 +216,7 @@ export default function LandingTrustExercise({ onStart }: Props) {
               className="rounded-2xl overflow-hidden cursor-pointer transform transition-transform duration-200 ease-out hover:-translate-y-2"
               style={{ backgroundColor: "var(--card)" }}
             >
-              <ImageWithFallback src="/src/public/tea2.jpg" alt="Čaj" className="w-full h-44 object-cover" />
+              <ImageWithFallback src="/tea2.jpg" alt="Čaj" className="w-full h-44 object-cover" />
               <div className="p-4">
                 <h4 className="text-sm font-semibold" style={{ color: "var(--text-primary)" }}>Tea</h4>
                 <p className="text-xs mt-1" style={{ color: "var(--text-secondary)" }}>A calming choice for rest and relaxation.</p>
