@@ -4,6 +4,8 @@ import { Button } from "./ui/button";
 import { Calendar } from "./ui/calendar";
 import { Card } from "./ui/card";
 import { Checkbox } from "./ui/checkbox";
+import { IdentityVerification } from "./IdentityVerification";
+
 import {
   Building2,
   Video,
@@ -13,6 +15,7 @@ import {
   Calendar as CalendarIcon,
 } from "lucide-react";
 import { ConfettiEffect } from "./ConfettiEffect";
+
 
 interface BookingFlowProps {
   onComplete: () => void;
@@ -28,6 +31,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [includeReport, setIncludeReport] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
 
   const timeSlots = [
     "9:00 AM",
@@ -432,7 +436,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                   className="mt-8 flex justify-center"
                 >
                   <Button
-                    onClick={() => setStep(3)}
+                    onClick={() => setShowVerificationModal(true)}  // Ovdje samo promijeni na setShowVerificationModal(true)
                     disabled={!canContinueStep2}
                     className="h-12 px-10 rounded-2xl text-sm font-light transition-all disabled:opacity-40 border-0"
                     style={{
@@ -446,6 +450,15 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                     Continue
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
+                  {showVerificationModal && (
+                    <AnimatePresence>
+                      <IdentityVerification
+                        isOpen={showVerificationModal}
+                        onClose={() => setShowVerificationModal(false)}
+                        onVerificationSuccess={() => setStep(3)}
+                      />
+                    </AnimatePresence>
+                  )}
                 </motion.div>
               </Card>
             </motion.div>
@@ -460,7 +473,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
               transition={{ duration: 0.4 }}
             >
               <h2
-                className="text-center text-lg font-light mb-8"
+                className="text-center text-lg font-light mb-8 cursor-pointer"
                 style={{ color: "var(--text-primary)" }}
               >
                 Confirm Your Booking

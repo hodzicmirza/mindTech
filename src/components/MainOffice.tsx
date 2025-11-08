@@ -484,7 +484,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                 whileTap={{ scale: 0.95 }}
                 transition={{ delay: 0.15 }}
                 onClick={() => setNotesOpen(true)}
-                className="relative mt-20 mb-6 rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-outline)] cursor-pointer"
+                className="relative mt-20 mb-6 rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-(--focus-outline) cursor-pointer"
                 aria-label="Open notes panel"
               >
                 {/* Glowing background effect */}
@@ -551,7 +551,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           <div className="relative">
             <div
               aria-hidden
-              className="absolute -inset-6 sm:-inset-8 rounded-[2rem] sm:rounded-[3rem]"
+              className="absolute -inset-6 sm:-inset-8 rounded-4xl sm:rounded-[3rem]"
             />
             <div
               className="relative flex flex-col /* mobile-first: kolona */
