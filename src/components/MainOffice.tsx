@@ -225,7 +225,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
               className="text-xl font-light"
               style={{ color: "var(--text-primary)" }}
             >
-              ASHE
+              Introduction To Self Help
             </h1>
             <p
               className="text-xs font-light"

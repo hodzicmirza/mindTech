@@ -264,7 +264,7 @@ export default function LandingTrustExercise({ onStart }: Props) {
                 boxShadow: "var(--shadow-sm)",
               }}
             >
-             Start free
+             Let's go
             </button>
           </div>
           <p
