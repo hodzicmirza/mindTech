@@ -161,15 +161,15 @@ export function QuestionCard({
               transition={{ delay: 0.1 }}
               className="text-center px-8"
             >
-              <p
+              {/* <p
                 className="text-xl sm:text-2xl font-light mb-2"
                 style={{ color: "var(--text-primary)" }}
               >
                 Great choice! ✨
-              </p>
+              </p> */}
               <p
                 className="font-light"
-                style={{ color: "var(--text-secondary)" }}
+                style={{ color: "var(--text-secondary)", fontSize: "30px" }}
               >
                 {encouragementText}
               </p>
