@@ -291,7 +291,9 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                 <FaTrash />
               </button>
               <button
-                onClick={() => setNotesOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSendMessage()}}
                 className="h-10 px-6 rounded-xl text-sm font-extrabold bg-gradient-to-r from-emerald-800 via-teal-800 to-cyan-800 text-black hover:from-emerald-900 hover:via-teal-900 hover:to-cyan-900 border-2 border-gray-800 shadow-[0_4px_14px_0_rgba(0,0,0,0.4)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.5)] transition-all hover:scale-110 active:scale-95 cursor-pointer"
               >
                 <IoSend />
