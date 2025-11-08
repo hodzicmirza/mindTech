@@ -247,16 +247,43 @@ export function AnalysisReport({
     focusAreas = insights.focuses;
   }
 
-  const talkingPoints = [
-    /* `Explored feelings about ${problem || "personal growth"}`,
-    "Identified key emotional patterns",
-    "Discussed current coping strategies",
-    "Explored future goals and aspirations", */
-  ];
+  const handleDownloadPDF = async () => {
+    try {
+      const element = document.getElementById('report-summary');
+      
+      if (!element) {
+        alert('Report not found!');
+        return;
+      }
+
+      const { jsPDF } = await import('jspdf');
+      const html2canvas = (await import('html2canvas')).default;
+
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      }as any);
+
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('therapy_report.pdf');
+      
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error generating PDF. Please try again.');
+    }
+  };
 
   return (
     <div
       className="min-h-screen px-6 py-10"
+      id="report-summary"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       <div className="max-w-5xl mx-auto">
@@ -430,7 +457,7 @@ export function AnalysisReport({
                     className="text-sm font-light"
                     style={{ color: "var(--text-primary)" }}
                   >
-                    Answeras You Used
+                    Answers You Used
                   </h3>
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -467,6 +494,7 @@ export function AnalysisReport({
               className="mt-5 space-y-2.5"
             >
               <Button
+                onClick={handleDownloadPDF}
                 variant="outline"
                 className="w-full h-10 rounded-xl border-0 text-xs font-light cursor-pointer"
                 style={{
@@ -616,29 +644,6 @@ export function AnalysisReport({
                 ))}
               </div>
             </Card>
-
-            {/* Talking Points */}
-            {/* <Card className="p-8 rounded-3xl border-0" style={{ boxShadow: "var(--shadow-medium)" }}>
-              <h3 className="mb-4">Talking Points for Your Next Session</h3>
-              <p className="text-sm text-muted-foreground mb-6">
-                Share these topics with your therapist to continue the conversation:
-              </p>
-
-              <ul className="space-y-3">
-                {talkingPoints.map((point, index) => (
-                  <motion.li
-                    key={index}
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 + index * 0.1 }}
-                    className="flex items-start gap-3 text-sm"
-                  >
-                    <ArrowRight className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
-                    <span>{point}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </Card> */}
           </motion.div>
         </div>
       </div>
