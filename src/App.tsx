@@ -24,14 +24,12 @@ type Screen =
 
 type ActivityType = "problem-cards" | "self-esteem" | "well-being";
 
-<<<<<<< HEAD
-=======
+
 interface BookingDetails {
   sessionType: "in-person" | "online";
   date: Date;
   time: string;
 }
->>>>>>> 4e2766ad2718ff8f598070303165989dc73b2c67
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>("landing");
