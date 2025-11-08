@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
 import {
-  Sun, 
+  Sun,
   Heart,
   Brain,
   Image,
@@ -21,9 +21,24 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
   const [notes, setNotes] = useState("");
 
   const activities = [
-    { title: "Problem Cards", icon: MessageSquare, color: "var(--pastel-lavender)", id: "problem-cards" },
-    { title: "Do you believe in yourself?", icon: Heart, color: "var(--pastel-sky)", id: "self-esteem" },
-    { title: "How are you feeling", icon: Sun, color: "var(--pastel-mint)", id: "well-being" },
+    {
+      title: "Problem Cards",
+      icon: MessageSquare,
+      color: "var(--pastel-lavender)",
+      id: "problem-cards",
+    },
+    {
+      title: "Do you believe in yourself?",
+      icon: Heart,
+      color: "var(--pastel-sky)",
+      id: "self-esteem",
+    },
+    {
+      title: "How are you feeling",
+      icon: Sun,
+      color: "var(--pastel-mint)",
+      id: "well-being",
+    },
   ];
 
   return (
@@ -86,6 +101,8 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         </motion.div>
       </nav>
 
+      
+
       {/* Chat panel – force bottom-left positioning */}
       <motion.aside
         role="dialog"
@@ -106,52 +123,40 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           right: "auto",
         }}
       >
-        <div className="w-full rounded-2xl p-4 bg-white/80 backdrop-blur shadow-2xl border-2 border-border flex flex-col gap-3 will-change-transform">
-          {/* Avatar relocated in to panel (left) when open */}
-          <div className="flex items-start gap-3">
-            <motion.div
-              layoutId="session-avatar"
-              className="w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl shrink-0"
-            >
-              <ImageWithFallback
-                src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=512&q=80"
-                alt="AI Agent"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-            <div className="flex-1 flex items-start justify-between gap-2">
-              <div>
-                <h3 className="text-sm font-medium text-foreground">
-                  Session notes
-                </h3>
-                <p className="text-xs text-muted-foreground">
-                  Jot ideas here. AI assist coming soon.
-                </p>
-              </div>
-              <button
-                onClick={() => setNotesOpen(false)}
-                className="h-8 px-3 rounded-xl text-xs bg-white/60 hover:bg-white/80 border border-border text-foreground"
-              >
-                Hide
-              </button>
+        <div className="w-full rounded-2xl p-4 bg-white/60 backdrop-blur-xl shadow-2xl border-2 border-white/40 flex flex-col gap-3 will-change-transform">
+          {/* Avatar removed from panel header */}
+          <div className="flex items-start justify-between gap-2">
+            <div>
+              <h3 className="text-sm font-semibold text-foreground drop-shadow-sm">
+                Session notes
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Jot ideas here. AI assist coming soon.
+              </p>
             </div>
+            <button
+              onClick={() => setNotesOpen(false)}
+              className="h-8 px-3 rounded-xl text-xs font-medium bg-white/90 hover:bg-white border border-border text-foreground shadow-sm hover:shadow transition-all"
+            >
+              Hide
+            </button>
           </div>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Type your message..."
-            className="min-h-24 max-h-40 rounded-xl p-3 text-sm bg-white/50 placeholder:text-muted-foreground text-foreground border-2 border-border outline-none focus:ring-2 focus:ring-[var(--focus-outline)] resize-none"
+            className="min-h-24 max-h-40 rounded-xl p-3 text-sm bg-white/70 placeholder:text-muted-foreground text-foreground border-2 border-border/60 outline-none focus:ring-2 focus:ring-[var(--focus-outline)] focus:border-border resize-none shadow-sm"
           />
           <div className="flex items-center justify-end gap-2">
             <button
               onClick={() => setNotes("")}
-              className="h-8 px-3 rounded-xl text-xs bg-transparent hover:bg-white/60 border border-border text-muted-foreground"
+              className="h-8 px-3 rounded-xl text-xs font-medium bg-white/70 hover:bg-white/90 border border-border text-foreground shadow-sm hover:shadow transition-all"
             >
               Clear
             </button>
             <button
               onClick={() => setNotesOpen(false)}
-              className="h-8 px-3 rounded-xl text-xs bg-primary text-white hover:bg-primary/90"
+              className="h-8 px-3 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-500 to-purple-600 text-white hover:from-purple-600 hover:to-purple-700 shadow-md hover:shadow-lg transition-all"
             >
               Done
             </button>
@@ -168,6 +173,19 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     flex flex-col items-center
                     ${notesOpen ? "justify-center" : "justify-start"}`}
       >
+        {/* Avatar floats to top-left when panel opens */}
+      {notesOpen && (
+        <motion.div
+          layoutId="session-avatar"
+          className="absolute top-0 left-10 z-50 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl"
+        >
+          <ImageWithFallback
+            src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=512&q=80"
+            alt="AI Agent"
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+      )}
         {/* Center avatar (moves into panel on click) */}
         {!notesOpen && (
           <motion.button
