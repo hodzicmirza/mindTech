@@ -334,43 +334,49 @@ export default function AmongUS({ onComplete }: { onComplete: () => void }) {
     </svg>
 
       <style>{`
-        .light { opacity: 0; }
-        .drag { fill: white; opacity: 0; }
-        .line {
-          stroke-width: 18px;
-          pointer-events: none;
-        }
-        .line-back {
-          stroke-width: 30px;
-          pointer-events: none;
-        }
-        .line-1 {
-          stroke: #324d9c;
-        }
-        .line-1.line-back {
-          stroke: #25378d;
-        }
-        .line-2 {
-          stroke: #e52320;
-        }
-        .line-2.line-back {
-          stroke: #a71916;
-        }
-        .line-3 {
-          stroke: #ffeb13;
-        }
-        .line-3.line-back {
-          stroke: #aa9f17;
-        }
-        .line-4 {
-          stroke: #a6529a;
-        }
-        .line-4.line-back {
-          stroke: #90378c;
-        }
-        
-        /* Add all the other CSS classNamees from your original code */
-        .c{fill:#273065;stroke:#1a1b36}.c,.d,.e,.f,.k,.u{stroke-miterlimit:10}.c,.d,.e,.f,.u,.y{stroke-width:5px}.d{fill:#71160e;stroke:#280f10}.e{fill:#8c6c15}.e,.u{stroke:#38321a}.f{fill:#212021;stroke:#000}.h{fill:#9b3015;stroke:#471d12}.h,.y{stroke-linecap:round;stroke-linejoin:round}.k,.y{fill:none}.k{stroke:#1d1d1b;stroke-width:6px}.l{fill:#d9c905}.m{fill:#25378d}.n{fill:#324d9c}.o{fill:#a71916}.p{fill:#e52320}.q{fill:#aa9f17}.r{fill:#ffeb13}.s{fill:#90378c}.t{fill:#a6529a}.u{fill:#1d1d1b}.v{fill:#5b5c64}.w{fill:#292829}.x{fill:#2f3038}.y{stroke:#252526}
+      .light {
+  opacity: 0;
+}
+
+.light {
+  opacity: 0;
+}
+
+.drag {fill: white; opacity: 0;}
+.line {
+  stroke-width: 18px;
+  pointer-events: none;
+}
+.line-back {
+  stroke-width: 30px;
+  pointer-events: none;
+}
+.line-1 {
+  stroke: #94bfdc;
+  &.line-back {
+    stroke: #94bfdc;
+  }
+}
+.line-2 {
+  stroke: #ec7b7b;
+  &.line-back {
+    stroke: #ec7b7b;
+  }
+}
+.line-3 {
+  stroke: #e9c17d;
+  &.line-back {
+    stroke: #e9c17d;
+  }
+}
+.line-4 {
+  stroke: #b896df;
+  &.line-back {
+    stroke: #b896df;
+  }
+}
+
+.c{fill:#94bfdc;stroke:#688da5}.c,.d,.e,.f,.k,.u{stroke-miterlimit:10}.c,.d,.e,.f,.u,.y{stroke-width:5px}.d{fill:#ec7b7b;stroke:#ad4b4b}.e{fill:#e9c17d}.e,.u{stroke:#c0964d}.f{fill:#b896df;stroke:#8253b9}.h{fill:#9b3015;stroke:#471d12}.h,.y{stroke-linecap:round;stroke-linejoin:round}.k,.y{fill:none}.k{stroke:#1d1d1b;stroke-width:6px}.l{fill:#d9c905}.m{fill:#688da5}.n{fill:#94bfdc}.o{fill:#ad4b4b}.p{fill:#ec7b7b}.q{fill:#c0964d}.r{fill:#e9c17d}.s{fill:#8253b9}.t{fill:#b896df}.u{fill:#1d1d1b}.v{fill:#5b5c64}.w{fill:#292829}.x{fill:#2f3038}.y{stroke:#252526}
       `}</style>
     </div>
     </div>
