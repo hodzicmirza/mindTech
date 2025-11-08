@@ -101,8 +101,6 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         </motion.div>
       </nav>
 
-      
-
       {/* Chat panel – force bottom-left positioning */}
       <motion.aside
         role="dialog"
@@ -174,18 +172,18 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     ${notesOpen ? "justify-center" : "justify-start"}`}
       >
         {/* Avatar floats to top-left when panel opens */}
-      {notesOpen && (
-        <motion.div
-          layoutId="session-avatar"
-          className="absolute top-0 left-10 z-50 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl"
-        >
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=512&q=80"
-            alt="AI Agent"
-            className="w-full h-full object-cover"
-          />
-        </motion.div>
-      )}
+        {notesOpen && (
+          <motion.div
+            layoutId="session-avatar"
+            className="absolute top-0 left-10 z-50 w-20 h-20 rounded-full overflow-hidden border-4 border-white shadow-xl"
+          >
+            <ImageWithFallback
+              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=512&q=80"
+              alt="AI Agent"
+              className="w-full h-full object-cover"
+            />
+          </motion.div>
+        )}
         {/* Center avatar (moves into panel on click) */}
         {!notesOpen && (
           <motion.button
