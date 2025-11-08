@@ -1,1 +1,38 @@
+/* Import calming, therapeutic font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
 @import "tailwindcss";
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  /* Therapeutic Color Palette - Soft, Calming Colors */
+  --color-sage: #b8cfc5;
+  --color-lavender: #d8cce6;
+  --color-peach: #f4d9cc;
+  --color-sky: #cfe3f0;
+  --color-mint: #d1e8dd;
+  --color-cream: #fdfbf7;
+  --color-soft-white: #ffffff;
+  
+  /* Text Colors - Softer, Less Aggressive */
+  --text-primary: #5a6875;
+  --text-secondary: #7d8a98;
+  --text-muted: #a8b3be;
+  --text-light: #c4cdd5;
+  
+  /* Background Colors */
+  --bg-primary: #fdfbf7;
+  --bg-card: #ffffff;
+  --bg-hover: #f9f6f2;
+  
+  /* Soft Shadows */
+  --shadow-xs: 0 1px 3px rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.06);
+}

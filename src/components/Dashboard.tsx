@@ -46,19 +46,19 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
       title: "5-Minute Breathing",
       description: "Calm your nervous system",
       icon: Heart,
-      color: "var(--pastel-lavender)",
+      color: "var(--color-lavender)",
     },
     {
       title: "Gratitude Journal",
       description: "Write 3 things daily",
       icon: Smile,
-      color: "var(--pastel-mint)",
+      color: "var(--color-mint)",
     },
     {
       title: "Mindful Walking",
       description: "10 minutes outside",
       icon: Brain,
-      color: "var(--pastel-sky)",
+      color: "var(--color-sky)",
     },
   ];
 
@@ -75,7 +75,10 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
   const progressValue = 33; // First session simulation done
 
   return (
-    <div className="min-h-screen bg-[#f5f0eb] p-6">
+    <div
+      className="min-h-screen p-6"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       <ConfettiEffect trigger={showConfetti} />
 
       <div className="max-w-6xl mx-auto">
@@ -87,7 +90,8 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
         >
           <button
             onClick={onBackToHome}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-6"
+            className="flex items-center gap-2 transition-colors mb-6 font-light"
+            style={{ color: "var(--text-secondary)" }}
           >
             <Home className="w-4 h-4" />
             <span className="text-sm">Back to Office</span>
@@ -95,10 +99,16 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
 
           <div className="flex items-center justify-between flex-wrap gap-4">
             <div>
-              <h1 className="text-2xl font-medium text-gray-800 mb-1">
+              <h1
+                className="text-2xl font-light mb-1"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Your Therapy Journey
               </h1>
-              <p className="text-sm text-gray-500">
+              <p
+                className="text-sm font-light"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Track your progress and access helpful resources
               </p>
             </div>
@@ -107,11 +117,14 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="px-5 py-2.5 rounded-full flex items-center gap-2 shadow-md"
-              style={{ backgroundColor: "#c8b6e2" }}
+              className="px-5 py-2.5 rounded-full flex items-center gap-2"
+              style={{
+                backgroundColor: "var(--color-lavender)",
+                boxShadow: "var(--shadow-sm)",
+              }}
             >
               <Sparkles className="w-4 h-4 text-white" />
-              <span className="text-sm text-white font-medium">
+              <span className="text-sm text-white font-light">
                 Session 1 Complete!
               </span>
             </motion.div>
@@ -124,19 +137,31 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
         >
-          <Card className="p-6 rounded-3xl bg-white shadow-lg border border-gray-200 mb-6">
+          <Card
+            className="p-6 rounded-3xl border-0 mb-6"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              boxShadow: "var(--shadow-md)",
+            }}
+          >
             <div className="flex items-center gap-3 mb-6">
               <div
                 className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                style={{ backgroundColor: "#c8b6e2" }}
+                style={{ backgroundColor: "var(--color-sage)" }}
               >
                 <TrendingUp className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h3 className="text-base font-medium text-gray-800">
+                <h3
+                  className="text-base font-normal"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Your Progress
                 </h3>
-                <p className="text-xs text-gray-500">
+                <p
+                  className="text-xs font-light"
+                  style={{ color: "var(--text-secondary)" }}
+                >
                   You're on the right path to better mental health
                 </p>
               </div>
@@ -144,8 +169,16 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
 
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">Journey Progress</span>
-                <span className="text-gray-700 font-medium">
+                <span
+                  className="font-light"
+                  style={{ color: "var(--text-secondary)" }}
+                >
+                  Journey Progress
+                </span>
+                <span
+                  className="font-normal"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   {progressValue}%
                 </span>
               </div>
@@ -156,28 +189,55 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
-                  className="text-center p-3 rounded-2xl bg-gray-50"
+                  className="text-center p-3 rounded-2xl"
+                  style={{ backgroundColor: "var(--color-mint)" }}
                 >
-                  <CheckCircle2 className="w-5 h-5 text-gray-800 mx-auto mb-2" />
-                  <p className="text-xs text-gray-700">First Simulation</p>
+                  <CheckCircle2
+                    className="w-5 h-5 mx-auto mb-2"
+                    style={{ color: "var(--text-primary)" }}
+                  />
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    First Simulation
+                  </p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
-                  className="text-center p-3 rounded-2xl bg-gray-50 opacity-40"
+                  className="text-center p-3 rounded-2xl opacity-50"
+                  style={{ backgroundColor: "var(--bg-hover)" }}
                 >
-                  <Calendar className="w-5 h-5 text-gray-500 mx-auto mb-2" />
-                  <p className="text-xs text-gray-500">First Real Session</p>
+                  <Calendar
+                    className="w-5 h-5 mx-auto mb-2"
+                    style={{ color: "var(--text-muted)" }}
+                  />
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    First Real Session
+                  </p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="text-center p-3 rounded-2xl bg-gray-50 opacity-40"
+                  className="text-center p-3 rounded-2xl opacity-50"
+                  style={{ backgroundColor: "var(--bg-hover)" }}
                 >
-                  <ArrowRight className="w-5 h-5 text-gray-500 mx-auto mb-2" />
-                  <p className="text-xs text-gray-500">Ongoing Sessions</p>
+                  <ArrowRight
+                    className="w-5 h-5 mx-auto mb-2"
+                    style={{ color: "var(--text-muted)" }}
+                  />
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Ongoing Sessions
+                  </p>
                 </motion.div>
               </div>
             </div>
@@ -192,11 +252,17 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <Card className="p-6 rounded-3xl bg-white shadow-lg border border-gray-200 mb-6">
+            <Card
+              className="p-6 rounded-3xl border-0 mb-6"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-md)",
+              }}
+            >
               <div className="flex items-center gap-3 mb-6">
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center"
-                  style={{ backgroundColor: "#a8d5f7" }}
+                  style={{ backgroundColor: "var(--color-sky)" }}
                 >
                   {upcomingSession.type === "online" ? (
                     <Video className="w-5 h-5 text-white" />
@@ -205,10 +271,18 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                   )}
                 </div>
                 <div>
-                  <h3 className="text-base font-medium text-gray-800">
+                  <h3
+                    className="text-base font-normal"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     Upcoming Session
                   </h3>
-                  <p className="text-xs text-gray-500">Your next appointment</p>
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-secondary)" }}
+                  >
+                    Your next appointment
+                  </p>
                 </div>
               </div>
 
@@ -216,22 +290,46 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                 <div>
                   <div className="space-y-3 mb-6">
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Date & Time</p>
-                      <p className="text-sm text-gray-700">
+                      <p
+                        className="text-xs font-light mb-1"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        Date & Time
+                      </p>
+                      <p
+                        className="text-sm font-light"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         {upcomingSession.date} at {upcomingSession.time}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Psychologist</p>
-                      <p className="text-sm text-gray-700">
+                      <p
+                        className="text-xs font-light mb-1"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        Psychologist
+                      </p>
+                      <p
+                        className="text-sm font-light"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         {upcomingSession.psychologist}
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500 mb-1">Session Type</p>
+                      <p
+                        className="text-xs font-light mb-1"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
+                        Session Type
+                      </p>
                       <div
-                        className="inline-block px-3 py-1 rounded-xl text-xs capitalize"
-                        style={{ backgroundColor: "#a8d5f7", color: "white" }}
+                        className="inline-block px-3 py-1 rounded-xl text-xs capitalize font-light"
+                        style={{
+                          backgroundColor: "var(--color-sky)",
+                          color: "white",
+                        }}
                       >
                         {upcomingSession.type}
                       </div>
@@ -239,8 +337,12 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                   </div>
 
                   <Button
-                    className="w-full h-11 rounded-2xl text-sm font-medium"
-                    style={{ backgroundColor: "#8b7ba8", color: "white" }}
+                    className="w-full h-11 rounded-2xl text-sm font-light border-0"
+                    style={{
+                      backgroundColor: "var(--color-sage)",
+                      color: "white",
+                      boxShadow: "var(--shadow-sm)",
+                    }}
                   >
                     {upcomingSession.type === "online"
                       ? "Join Video Call"
@@ -248,21 +350,48 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                   </Button>
                 </div>
 
-                <div className="p-5 rounded-2xl bg-gray-50">
-                  <p className="text-sm text-gray-700 font-medium mb-4">
+                <div
+                  className="p-5 rounded-2xl"
+                  style={{ backgroundColor: "var(--color-peach)" }}
+                >
+                  <p
+                    className="text-sm font-normal mb-4"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     Preparation Tips
                   </p>
-                  <ul className="space-y-2.5 text-xs text-gray-600">
+                  <ul
+                    className="space-y-2.5 text-xs font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     <li className="flex items-start gap-2">
-                      <div className="w-3 h-3 rounded-full border-2 border-gray-400 mt-0.5 flex-shrink-0" />
+                      <div
+                        className="w-3 h-3 rounded-full border mt-0.5 flex-shrink-0"
+                        style={{
+                          borderColor: "var(--text-primary)",
+                          borderWidth: "1.5px",
+                        }}
+                      />
                       <span>Review your talking points below</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-3 h-3 rounded-full border-2 border-gray-400 mt-0.5 flex-shrink-0" />
+                      <div
+                        className="w-3 h-3 rounded-full border mt-0.5 flex-shrink-0"
+                        style={{
+                          borderColor: "var(--text-primary)",
+                          borderWidth: "1.5px",
+                        }}
+                      />
                       <span>Reflect on your week</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <div className="w-3 h-3 rounded-full border-2 border-gray-400 mt-0.5 flex-shrink-0" />
+                      <div
+                        className="w-3 h-3 rounded-full border mt-0.5 flex-shrink-0"
+                        style={{
+                          borderColor: "var(--text-primary)",
+                          borderWidth: "1.5px",
+                        }}
+                      />
                       <span>Note any questions you have</span>
                     </li>
                   </ul>
@@ -271,11 +400,23 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
             </Card>
 
             {/* Talking Points */}
-            <Card className="p-6 rounded-3xl bg-white shadow-lg border border-gray-200">
-              <h3 className="text-base font-medium text-gray-800 mb-2">
+            <Card
+              className="p-6 rounded-3xl border-0"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-md)",
+              }}
+            >
+              <h3
+                className="text-base font-normal mb-2"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Talking Points from Last Session
               </h3>
-              <p className="text-xs text-gray-500 mb-5">
+              <p
+                className="text-xs font-light mb-5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Topics to continue exploring with your therapist
               </p>
 
@@ -286,10 +427,19 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3 + index * 0.05 }}
-                    className="flex items-start gap-3 p-3 rounded-2xl bg-gray-50"
+                    className="flex items-start gap-3 p-3 rounded-2xl"
+                    style={{ backgroundColor: "var(--bg-hover)" }}
                   >
-                    <ArrowRight className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs text-gray-700 flex-1">{point}</p>
+                    <ArrowRight
+                      className="w-4 h-4 flex-shrink-0 mt-0.5"
+                      style={{ color: "var(--text-muted)" }}
+                    />
+                    <p
+                      className="text-xs font-light flex-1"
+                      style={{ color: "var(--text-primary)" }}
+                    >
+                      {point}
+                    </p>
                   </motion.div>
                 ))}
               </div>
@@ -303,11 +453,23 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
             transition={{ delay: 0.25 }}
             className="space-y-6"
           >
-            <Card className="p-6 rounded-3xl bg-white shadow-lg border border-gray-200">
-              <h3 className="text-base font-medium text-gray-800 mb-2">
+            <Card
+              className="p-6 rounded-3xl border-0"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-md)",
+              }}
+            >
+              <h3
+                className="text-base font-normal mb-2"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Quick Access Solutions
               </h3>
-              <p className="text-xs text-gray-500 mb-5">
+              <p
+                className="text-xs font-light mb-5"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Daily practices recommended by your therapist
               </p>
 
@@ -322,12 +484,14 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 + index * 0.1 }}
-                      whileHover={{ scale: 1.02 }}
-                      className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-                        isCompleted
-                          ? "border-gray-300 bg-gray-50"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
+                      whileHover={{ y: -2 }}
+                      className="p-4 rounded-2xl border-0 transition-all cursor-pointer"
+                      style={{
+                        backgroundColor: isCompleted
+                          ? "var(--color-mint)"
+                          : "var(--bg-hover)",
+                        boxShadow: "var(--shadow-xs)",
+                      }}
                       onClick={() => handleToggleItem(index)}
                     >
                       <div className="flex items-start gap-3">
@@ -339,7 +503,10 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                         </div>
                         <div className="flex-1">
                           <div className="flex items-start justify-between gap-2 mb-1">
-                            <p className="text-sm text-gray-800 font-medium">
+                            <p
+                              className="text-sm font-normal"
+                              style={{ color: "var(--text-primary)" }}
+                            >
                               {solution.title}
                             </p>
                             <Checkbox
@@ -348,7 +515,10 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                               className="mt-0.5"
                             />
                           </div>
-                          <p className="text-xs text-gray-500">
+                          <p
+                            className="text-xs font-light"
+                            style={{ color: "var(--text-secondary)" }}
+                          >
                             {solution.description}
                           </p>
                         </div>
@@ -358,8 +528,11 @@ export function Dashboard({ onBackToHome }: DashboardProps) {
                 })}
               </div>
 
-              <div className="mt-5 p-3 rounded-2xl bg-gray-50 text-center">
-                <p className="text-xs text-gray-500">
+              <div
+                className="mt-5 p-3 rounded-2xl text-center"
+                style={{ backgroundColor: "var(--color-lavender)" }}
+              >
+                <p className="text-xs font-light text-white">
                   ✨ Complete tasks to earn small wins
                 </p>
               </div>
