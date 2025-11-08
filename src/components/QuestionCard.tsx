@@ -56,13 +56,28 @@ export function QuestionCard({
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="relative w-full max-w-lg mx-auto"
     >
-      <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl border border-gray-100">
+      <div
+        className="backdrop-blur-sm rounded-3xl p-6 sm:p-8 relative overflow-hidden border-0"
+        style={{
+          backgroundColor: "var(--bg-card)",
+          boxShadow: "var(--shadow-lg)",
+        }}
+      >
         {/* Decorative gradient top bar */}
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400" />
+        <div
+          className="absolute top-0 left-0 w-full h-1"
+          style={{
+            background:
+              "linear-gradient(90deg, var(--color-lavender) 0%, var(--color-sky) 50%, var(--color-mint) 100%)",
+          }}
+        />
 
         {/* Progress indicator */}
         <div className="flex items-center justify-between mb-6 pt-2">
-          <span className="text-sm font-medium text-gray-600">
+          <span
+            className="text-sm font-light"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Question {currentCard} of {totalCards}
           </span>
           <div className="flex gap-1.5">
@@ -70,8 +85,12 @@ export function QuestionCard({
               <div
                 key={i}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  i < currentCard ? "bg-purple-500 scale-110" : "bg-gray-300"
+                  i < currentCard ? "scale-110" : ""
                 }`}
+                style={{
+                  backgroundColor:
+                    i < currentCard ? "var(--color-sage)" : "var(--bg-hover)",
+                }}
               />
             ))}
           </div>
@@ -81,7 +100,10 @@ export function QuestionCard({
         {!hideContent && (
           <>
             {/* Question */}
-            <h3 className="mb-8 text-xl sm:text-2xl font-semibold text-center text-gray-800 leading-relaxed">
+            <h3
+              className="mb-8 text-xl sm:text-2xl font-light text-center leading-relaxed"
+              style={{ color: "var(--text-primary)" }}
+            >
               {question}
             </h3>
 
@@ -92,13 +114,23 @@ export function QuestionCard({
                   <motion.button
                     key={index}
                     onClick={() => handleSelect(option.answer)}
-                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`min-h-[56px] px-4 py-3 rounded-2xl border-2 transition-all duration-200 text-sm font-semibold ${
-                      selectedAnswer === option.answer
-                        ? "border-purple-500 bg-purple-50 text-purple-700 shadow-lg shadow-purple-100"
-                        : "border-gray-200 bg-white hover:border-purple-300 hover:bg-purple-50/50 text-gray-700 hover:shadow-md"
-                    }`}
+                    className={`min-h-[56px] px-4 py-3 rounded-2xl border-0 transition-all duration-200 text-sm font-light cursor-pointer`}
+                    style={{
+                      backgroundColor:
+                        selectedAnswer === option.answer
+                          ? "var(--color-sage)"
+                          : "var(--bg-hover)",
+                      color:
+                        selectedAnswer === option.answer
+                          ? "white"
+                          : "var(--text-primary)",
+                      boxShadow:
+                        selectedAnswer === option.answer
+                          ? "var(--shadow-md)"
+                          : "var(--shadow-xs)",
+                    }}
                   >
                     {option.answer}
                   </motion.button>
@@ -117,7 +149,11 @@ export function QuestionCard({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3 }}
-            className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 backdrop-blur-md rounded-3xl z-10"
+            className="absolute inset-0 flex items-center justify-center backdrop-blur-md rounded-3xl z-10"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(216, 204, 230, 0.9) 0%, rgba(207, 227, 240, 0.9) 100%)",
+            }}
           >
             <motion.div
               initial={{ y: 20, opacity: 0 }}
@@ -125,10 +161,18 @@ export function QuestionCard({
               transition={{ delay: 0.1 }}
               className="text-center px-8"
             >
-              <p className="text-xl sm:text-2xl font-semibold text-purple-600 mb-2">
+              <p
+                className="text-xl sm:text-2xl font-light mb-2"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Great choice! ✨
               </p>
-              <p className="text-gray-600">{encouragementText}</p>
+              <p
+                className="font-light"
+                style={{ color: "var(--text-secondary)" }}
+              >
+                {encouragementText}
+              </p>
             </motion.div>
           </motion.div>
         )}

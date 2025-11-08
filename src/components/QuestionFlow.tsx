@@ -33,7 +33,11 @@ const encouragements = [
   "Thanks for sharing that! 🌺",
 ];
 
-export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps) {
+export function QuestionFlow({
+  problem,
+  onComplete,
+  onBack,
+}: QuestionFlowProps) {
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>([]);
   const [showWinModal, setShowWinModal] = useState(false);
@@ -51,10 +55,13 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
 
   useEffect(() => {
     const problemKey = getProblemKey(problem);
-    
+
     if (problemKey) {
       // Use predefined questions for standard problems
-      const categoryQuestions = (questionsData as { tests: Record<string, QuestionData[]> }).tests[problemKey] || [];
+      const categoryQuestions =
+        (questionsData as { tests: Record<string, QuestionData[]> }).tests[
+          problemKey
+        ] || [];
       setQuestions(categoryQuestions);
     } else {
       // Try to get custom questions from localStorage
@@ -63,7 +70,10 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
         setQuestions(customQuestions);
       } else {
         // Fallback to anxiety questions if custom questions not found
-        const categoryQuestions = (questionsData as { tests: Record<string, QuestionData[]> }).tests["anxiety"] || [];
+        const categoryQuestions =
+          (questionsData as { tests: Record<string, QuestionData[]> }).tests[
+            "anxiety"
+          ] || [];
         setQuestions(categoryQuestions);
       }
     }
@@ -87,29 +97,47 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6] flex items-center justify-center">
-        <p className="text-muted-foreground">Loading questions...</p>
+      <div
+        className="min-h-screen flex items-center justify-center"
+        style={{ backgroundColor: "var(--bg-primary)" }}
+      >
+        <p className="font-light" style={{ color: "var(--text-secondary)" }}>
+          Loading questions...
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6] flex flex-col">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       {/* Header */}
       <div className="p-6 flex items-center justify-between">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl backdrop-blur-sm transition-all font-light cursor-pointer"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            color: "var(--text-primary)",
+            boxShadow: "var(--shadow-xs)",
+          }}
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back</span>
         </button>
-
         <div className="text-center">
-          <p className="text-sm text-muted-foreground">Working on</p>
-          <p className="text-primary">{problem}</p>
+          <p
+            className="text-sm font-light"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Working on
+          </p>
+          <p className="font-light" style={{ color: "var(--text-primary)" }}>
+            {problem}
+          </p>
         </div>
-
         <div className="w-24" /> {/* Spacer for centering */}
       </div>
 
@@ -123,7 +151,9 @@ export function QuestionFlow({ problem, onComplete, onBack }: QuestionFlowProps)
             currentCard={currentCardIndex + 1}
             totalCards={questions.length}
             onNext={handleNext}
-            encouragementText={encouragements[currentCardIndex % encouragements.length]}
+            encouragementText={
+              encouragements[currentCardIndex % encouragements.length]
+            }
           />
         </AnimatePresence>
       </div>

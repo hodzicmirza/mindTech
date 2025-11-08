@@ -34,15 +34,15 @@ export function ProblemSelection({
       id: "anxiety",
       label: "Anxiety",
       icon: Heart,
-      color: "var(--pastel-lavender)",
+      color: "var(--color-lavender)",
     },
     {
       id: "depression",
       label: "Depression",
       icon: Brain,
-      color: "var(--pastel-sky)",
+      color: "var(--color-sky)",
     },
-    { id: "adhd", label: "ADHD", icon: Zap, color: "var(--pastel-mint)" },
+    { id: "adhd", label: "ADHD", icon: Zap, color: "var(--color-mint)" },
   ];
 
   const handleContinue = async () => {
@@ -97,17 +97,27 @@ export function ProblemSelection({
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+          className="absolute top-6 right-6 w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer"
+          style={{
+            backgroundColor: "var(--bg-hover)",
+            color: "var(--text-secondary)",
+          }}
         >
-          <X className="w-5 h-5 text-gray-600" />
+          <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="mb-8 pr-12">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+          <h2
+            className="text-2xl font-light mb-3"
+            style={{ color: "var(--text-primary)" }}
+          >
             What do you want to work on today?
           </h2>
-          <p className="text-gray-500 text-base">
+          <p
+            className="text-base font-light"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Select an area you'd like to explore. This helps personalize your
             session.
           </p>
@@ -119,17 +129,17 @@ export function ProblemSelection({
             const Icon = problem.icon;
             const isSelected = selectedProblem === problem.id;
 
-            // map backgrounds (use hex/rgb literals for all)
+            // map backgrounds (use therapeutic colors)
             const iconBgMap: Record<string, string> = {
-              anxiety: "#ffb6c1",
-              depression: "rgb(168, 213, 247)",
-              adhd: "rgb(168, 230, 207)",
+              anxiety: "#d8cce6",
+              depression: "#cfe3f0",
+              adhd: "#d1e8dd",
             };
 
             const checkBgMap: Record<string, string> = {
-              anxiety: "#ffb6c1",
-              depression: "rgb(168, 213, 247)",
-              adhd: "rgb(168, 230, 207)",
+              anxiety: "#d8cce6",
+              depression: "#cfe3f0",
+              adhd: "#d1e8dd",
             };
 
             const isColorLiteral = (s: string) =>
@@ -137,7 +147,11 @@ export function ProblemSelection({
 
             const hexToRgba = (hex: string, alpha = 1) => {
               let h = hex.replace("#", "").trim();
-              if (h.length === 3) h = h.split("").map((c) => c + c).join("");
+              if (h.length === 3)
+                h = h
+                  .split("")
+                  .map((c) => c + c)
+                  .join("");
               const r = parseInt(h.substring(0, 2), 16);
               const g = parseInt(h.substring(2, 4), 16);
               const b = parseInt(h.substring(4, 6), 16);
@@ -147,38 +161,53 @@ export function ProblemSelection({
             const toTransparent = (color: string, alpha = 0.15) => {
               const c = color.trim();
               if (c.startsWith("#")) return hexToRgba(c, alpha);
-              if (c.startsWith("rgb(")) return c.replace("rgb(", "rgba(").replace(")", `, ${alpha})`);
+              if (c.startsWith("rgb("))
+                return c.replace("rgb(", "rgba(").replace(")", `, ${alpha})`);
               return undefined;
             };
 
             // button class
             const buttonClass = `p-6 rounded-2xl border-2 transition-all relative ${
-              isSelected ? "shadow-md" : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
+              isSelected
+                ? "shadow-md"
+                : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
             }`;
 
             // set border + subtle bg on selected to match the color
             const iconBg = iconBgMap[problem.id];
-            const selectedBorderColor = isColorLiteral(iconBg) ? iconBg : undefined;
-            const selectedBgColor = isColorLiteral(iconBg) ? toTransparent(iconBg, 0.15) : undefined;
+            const selectedBorderColor = isColorLiteral(iconBg)
+              ? iconBg
+              : undefined;
+            const selectedBgColor = isColorLiteral(iconBg)
+              ? toTransparent(iconBg, 0.15)
+              : undefined;
 
             const buttonStyle = isSelected
               ? {
-                  ...(selectedBorderColor ? { borderColor: selectedBorderColor } : {}),
-                  ...(selectedBgColor ? { backgroundColor: selectedBgColor } : {}),
+                  ...(selectedBorderColor
+                    ? { borderColor: selectedBorderColor }
+                    : {}),
+                  ...(selectedBgColor
+                    ? { backgroundColor: selectedBgColor }
+                    : {}),
                 }
               : undefined;
 
             const iconClass = `w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
               !isColorLiteral(iconBg) ? iconBg : ""
             }`;
-            const iconStyle = isColorLiteral(iconBg) ? { backgroundColor: iconBg } : undefined;
+            const iconStyle = isColorLiteral(iconBg)
+              ? { backgroundColor: iconBg }
+              : undefined;
 
             const checkBg = checkBgMap[problem.id];
             // place checkmark in the top-right so it doesn't overlap the label
             const checkClass = `absolute top-3 right-3 w-7 h-7 rounded-full flex items-center justify-center shadow-md ${
               !isColorLiteral(checkBg) ? checkBg : ""
             }`;
-            const checkStyle = isColorLiteral(checkBg) ? { backgroundColor: checkBg } : undefined;
+            const checkStyle = isColorLiteral(checkBg)
+              ? { backgroundColor: checkBg }
+              : undefined;
 
             return (
               <motion.button
@@ -195,7 +224,10 @@ export function ProblemSelection({
                 <div className={iconClass} style={iconStyle}>
                   <Icon className="w-8 h-8 text-white" />
                 </div>
-                <p className="text-center font-medium text-gray-700">
+                <p
+                  className="text-center font-light"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   {problem.label}
                 </p>
 
@@ -237,19 +269,29 @@ export function ProblemSelection({
             }}
             whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.99 }}
-            className={`w-full p-5 rounded-2xl border-2 transition-all ${
-              selectedProblem === "custom"
-                ? "border-gray-300 bg-gray-50 shadow-sm"
-                : "border-gray-200 bg-white hover:border-gray-300"
+            className={`w-full p-5 rounded-2xl border-0 transition-all cursor-pointer ${
+              selectedProblem === "custom" ? "shadow-sm" : ""
             }`}
+            style={{
+              backgroundColor:
+                selectedProblem === "custom"
+                  ? "var(--bg-hover)"
+                  : "var(--bg-card)",
+              boxShadow:
+                selectedProblem === "custom" ? "var(--shadow-sm)" : "none",
+            }}
           >
             <div className="flex items-center justify-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-orange-300 flex items-center justify-center">
-                <div style={{ backgroundColor: "rgb(255, 212, 163)" }} className="w-12 h-12 rounded-full flex items-center justify-center">
-                  <Plus className="w-6 h-6 text-white" />
-                </div>
+              <div
+                className="w-12 h-12 rounded-full flex items-center justify-center"
+                style={{ backgroundColor: "var(--color-peach)" }}
+              >
+                <Plus className="w-6 h-6 text-white" />
               </div>
-              <p className="text-gray-600 font-medium">
+              <p
+                className="font-light"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Something else (custom)
               </p>
             </div>
@@ -291,13 +333,17 @@ export function ProblemSelection({
             (selectedProblem === "custom" && !customIssue.trim()) ||
             isGenerating
           }
-          className={`w-full h-14 rounded-2xl font-semibold text-white transition-all ${
+          className={`w-full h-14 rounded-2xl font-light text-white transition-all ${
             !selectedProblem ||
             (selectedProblem === "custom" && !customIssue.trim()) ||
             isGenerating
-              ? "bg-purple-200 cursor-not-allowed"
-              : "bg-purple-300 hover:bg-purple-400 active:scale-98 shadow-sm"
+              ? "cursor-not-allowed opacity-50"
+              : "cursor-pointer"
           }`}
+          style={{
+            backgroundColor: "var(--color-sage)",
+            boxShadow: "var(--shadow-sm)",
+          }}
         >
           {isGenerating ? (
             <div className="flex items-center justify-center gap-2">

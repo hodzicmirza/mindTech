@@ -99,7 +99,10 @@ export function AnalysisReport({
   ];
 
   return (
-    <div className="min-h-screen bg-[#f9f7f4] px-6 py-10">
+    <div
+      className="min-h-screen px-6 py-10"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <motion.div
@@ -112,14 +115,23 @@ export function AnalysisReport({
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 280, damping: 22 }}
             className="w-14 h-14 mb-4 rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: "#c8b6e2" }}
+            style={{
+              backgroundColor: "var(--color-lavender)",
+              boxShadow: "var(--shadow-sm)",
+            }}
           >
             <FileText className="w-7 h-7 text-white" />
           </motion.div>
-          <h1 className="text-lg font-medium tracking-tight mb-2 text-gray-800">
+          <h1
+            className="text-lg font-light tracking-tight mb-2"
+            style={{ color: "var(--text-primary)" }}
+          >
             Your First-Session Insight Report
           </h1>
-          <p className="text-xs leading-relaxed text-gray-500 max-w-2xl">
+          <p
+            className="text-xs leading-relaxed font-light max-w-2xl"
+            style={{ color: "var(--text-secondary)" }}
+          >
             Based on your {getTestTitle()}, we've generated a personalized
             summary. This is a supportive overview, not a diagnosis - think of
             it as talking points for your next therapy session.
@@ -135,32 +147,59 @@ export function AnalysisReport({
             transition={{ delay: 0.2 }}
             className="lg:col-span-1"
           >
-            <Card className="p-5 rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <Card
+              className="p-5 rounded-2xl border-0"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-sm)",
+              }}
+            >
               <div className="flex items-center gap-2.5 mb-5">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: "#a8d5f7" }}
+                  style={{
+                    backgroundColor: "var(--color-sky)",
+                    boxShadow: "var(--shadow-xs)",
+                  }}
                 >
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-sm font-medium text-gray-800">
+                <h3
+                  className="text-sm font-light"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Session Summary
                 </h3>
               </div>
 
               <div className="space-y-3.5">
                 <div>
-                  <p className="text-xs text-gray-500 mb-1.5">Test Type</p>
-                  <p className="text-xs text-gray-700">{getTestTitle()}</p>
+                  <p
+                    className="text-xs font-light mb-1.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Test Type
+                  </p>
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {getTestTitle()}
+                  </p>
                 </div>
 
                 {problem && (
                   <div>
-                    <p className="text-xs text-gray-500 mb-1.5">Focus Area</p>
+                    <p
+                      className="text-xs font-light mb-1.5"
+                      style={{ color: "var(--text-muted)" }}
+                    >
+                      Focus Area
+                    </p>
                     <div
-                      className="inline-block px-2.5 py-1 rounded-lg text-xs font-medium"
+                      className="inline-block px-2.5 py-1 rounded-lg text-xs font-light"
                       style={{
-                        backgroundColor: "#c8b6e2",
+                        backgroundColor: "var(--color-lavender)",
                         color: "white",
                       }}
                     >
@@ -170,15 +209,34 @@ export function AnalysisReport({
                 )}
 
                 <div>
-                  <p className="text-xs text-gray-500 mb-1.5">Responses</p>
-                  <p className="text-xs text-gray-700">
+                  <p
+                    className="text-xs font-light mb-1.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Responses
+                  </p>
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {answers.length} insights shared
                   </p>
                 </div>
 
-                <div className="pt-3.5 border-t border-gray-200">
-                  <p className="text-xs text-gray-500 mb-1.5">Completed</p>
-                  <p className="text-xs text-gray-700">
+                <div
+                  className="pt-3.5"
+                  style={{ borderTop: "1px solid var(--bg-hover)" }}
+                >
+                  <p
+                    className="text-xs font-light mb-1.5"
+                    style={{ color: "var(--text-muted)" }}
+                  >
+                    Completed
+                  </p>
+                  <p
+                    className="text-xs font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {new Date().toLocaleDateString(undefined, {
                       year: "numeric",
                       month: "long",
@@ -195,15 +253,27 @@ export function AnalysisReport({
               transition={{ delay: 0.3 }}
               className="mt-5"
             >
-              <Card className="p-5 rounded-2xl border border-gray-200 bg-white shadow-sm">
+              <Card
+                className="p-5 rounded-2xl border-0"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  boxShadow: "var(--shadow-sm)",
+                }}
+              >
                 <div className="flex items-center gap-2.5 mb-4">
                   <div
                     className="w-10 h-10 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: "#a8e6cf" }}
+                    style={{
+                      backgroundColor: "var(--color-mint)",
+                      boxShadow: "var(--shadow-xs)",
+                    }}
                   >
                     <Brain className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-sm font-medium text-gray-800">
+                  <h3
+                    className="text-sm font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     Key Words You Used
                   </h3>
                 </div>
@@ -214,14 +284,14 @@ export function AnalysisReport({
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.35 + index * 0.04 }}
-                      className="px-2.5 py-1.5 rounded-lg text-xs font-medium"
+                      className="px-2.5 py-1.5 rounded-lg text-xs font-light"
                       style={{
                         backgroundColor: [
-                          "#c8b6e2",
-                          "#a8d5f7",
-                          "#a8e6cf",
-                          "#ffd4a3",
-                          "#ffb6c1",
+                          "var(--color-lavender)",
+                          "var(--color-sky)",
+                          "var(--color-mint)",
+                          "var(--color-peach)",
+                          "var(--color-sage)",
                         ][index % 5],
                         color: "white",
                       }}
@@ -242,17 +312,23 @@ export function AnalysisReport({
             >
               <Button
                 variant="outline"
-                className="w-full h-10 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-xs font-medium text-gray-700"
+                className="w-full h-10 rounded-xl border-0 text-xs font-light cursor-pointer"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  color: "var(--text-primary)",
+                  boxShadow: "var(--shadow-sm)",
+                }}
               >
                 <Download className="w-3.5 h-3.5 mr-1.5" />
                 Download Report
               </Button>
               <Button
                 onClick={onBookSession}
-                className="w-full h-10 rounded-xl text-xs font-medium"
+                className="w-full h-10 rounded-xl text-xs font-light cursor-pointer"
                 style={{
-                  backgroundColor: "#8b7ba8",
+                  backgroundColor: "var(--color-sage)",
                   color: "white",
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <Sparkles className="w-4 h-4 mr-1.5" />
@@ -261,7 +337,12 @@ export function AnalysisReport({
               <Button
                 onClick={onTryAnother}
                 variant="outline"
-                className="w-full h-10 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-xs font-medium text-gray-700"
+                className="w-full h-10 rounded-xl border-0 text-xs font-light cursor-pointer"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  color: "var(--text-primary)",
+                  boxShadow: "var(--shadow-sm)",
+                }}
               >
                 Try Another Activity
               </Button>
@@ -276,15 +357,27 @@ export function AnalysisReport({
             className="lg:col-span-1 space-y-5"
           >
             {/* Emotional Patterns */}
-            <Card className="p-5 rounded-2xl border border-gray-200 bg-white shadow-sm">
+            <Card
+              className="p-5 rounded-2xl border-0"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-sm)",
+              }}
+            >
               <div className="flex items-center gap-2.5 mb-4">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: "#ffb6c1" }}
+                  style={{
+                    backgroundColor: "var(--color-peach)",
+                    boxShadow: "var(--shadow-xs)",
+                  }}
                 >
                   <Heart className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-sm font-medium text-gray-800">
+                <h3
+                  className="text-sm font-light"
+                  style={{ color: "var(--text-primary)" }}
+                >
                   Emotional Patterns
                 </h3>
               </div>
@@ -296,10 +389,17 @@ export function AnalysisReport({
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4 + index * 0.1 }}
-                    className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50"
+                    className="flex items-start gap-2.5 p-3 rounded-xl"
+                    style={{ backgroundColor: "var(--bg-hover)" }}
                   >
-                    <CheckCircle2 className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                    <p className="text-xs leading-relaxed text-gray-700">
+                    <CheckCircle2
+                      className="w-4 h-4 flex-shrink-0 mt-0.5"
+                      style={{ color: "var(--text-muted)" }}
+                    />
+                    <p
+                      className="text-xs leading-relaxed font-light"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       {pattern}
                     </p>
                   </motion.div>
@@ -308,11 +408,23 @@ export function AnalysisReport({
             </Card>
 
             {/* Focus Areas */}
-            <Card className="p-5 rounded-2xl border border-gray-200 bg-white shadow-sm">
-              <h3 className="mb-2 text-sm font-medium text-gray-800">
+            <Card
+              className="p-5 rounded-2xl border-0"
+              style={{
+                backgroundColor: "var(--bg-card)",
+                boxShadow: "var(--shadow-sm)",
+              }}
+            >
+              <h3
+                className="mb-2 text-sm font-light"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Possible Focus Areas for Future Therapy
               </h3>
-              <p className="text-xs text-gray-500 mb-4">
+              <p
+                className="text-xs font-light mb-4"
+                style={{ color: "var(--text-secondary)" }}
+              >
                 Based on your responses, these areas might be worth exploring
                 further with a professional therapist:
               </p>
@@ -324,17 +436,24 @@ export function AnalysisReport({
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.6 + index * 0.1 }}
-                    className="flex items-start gap-2.5 p-3 rounded-xl bg-gray-50"
+                    className="flex items-start gap-2.5 p-3 rounded-xl"
+                    style={{ backgroundColor: "var(--bg-hover)" }}
                   >
                     <div
                       className="w-5 h-5 rounded-md flex items-center justify-center flex-shrink-0 mt-0.5"
-                      style={{ backgroundColor: "#c8b6e2" }}
+                      style={{
+                        backgroundColor: "var(--color-lavender)",
+                        boxShadow: "var(--shadow-xs)",
+                      }}
                     >
-                      <span className="text-white text-[10px] font-semibold">
+                      <span className="text-white text-[10px] font-light">
                         {index + 1}
                       </span>
                     </div>
-                    <p className="text-xs leading-relaxed text-gray-700">
+                    <p
+                      className="text-xs leading-relaxed font-light"
+                      style={{ color: "var(--text-primary)" }}
+                    >
                       {area}
                     </p>
                   </motion.div>

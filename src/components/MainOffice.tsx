@@ -116,47 +116,53 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
     {
       title: "Problem Cards",
       icon: MessageSquare,
-      color: "var(--pastel-lavender)",
+      color: "var(--color-lavender)",
       id: "problem-cards",
     },
     {
       title: "Do you believe in yourself?",
       icon: Heart,
-      color: "var(--pastel-sky)",
+      color: "var(--color-sky)",
       id: "self-esteem",
     },
     {
       title: "How are you feeling",
       icon: Sun,
-      color: "var(--pastel-mint)",
+      color: "var(--color-mint)",
       id: "well-being",
     },
   ];
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6]">
+    <div
+      className="relative min-h-screen overflow-x-hidden"
+      style={{ backgroundColor: "var(--bg-primary)" }}
+    >
       {/* Background */}
       <div className="fixed inset-0 w-screen h-screen z-0">
         <ImageWithFallback
           src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1920&q=80"
           alt="Cozy psychotherapy office"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#faf8f6]/85 via-[#f5f0eb]/80 to-[#f0ebe6]/85" />
+        <div
+          className="absolute inset-0"
+          style={{ backgroundColor: "var(--bg-primary)", opacity: 0.92 }}
+        />
       </div>
 
       {/* Decorative blobs (iza sadržaja) */}
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-20 left-10 w-32 h-32 rounded-full opacity-20 z-0"
-        style={{ backgroundColor: "var(--pastel-mint)" }}
+        className="absolute top-20 left-10 w-32 h-32 rounded-full opacity-10 z-0"
+        style={{ backgroundColor: "var(--color-mint)" }}
       />
       <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-20 right-10 w-40 h-40 rounded-full opacity-20 z-0"
-        style={{ backgroundColor: "var(--pastel-peach)" }}
+        className="absolute bottom-20 right-10 w-40 h-40 rounded-full opacity-10 z-0"
+        style={{ backgroundColor: "var(--color-peach)" }}
       />
 
       {/* Top Navigation */}
@@ -168,13 +174,23 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         >
           <div
             className="w-12 h-12 rounded-2xl flex items-center justify-center"
-            style={{ backgroundColor: "var(--pastel-lavender)" }}
+            style={{ backgroundColor: "var(--color-lavender)" }}
           >
-            <Sparkles className="w-6 h-6 text-black" />
+            <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h1 className="text-foreground">First Session</h1>
-            <p className="text-xs text-muted-foreground">Your safe space</p>
+            <h1
+              className="text-xl font-light"
+              style={{ color: "var(--text-primary)" }}
+            >
+              First Session
+            </h1>
+            <p
+              className="text-xs font-light"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              Your safe space
+            </p>
           </div>
         </motion.div>
       </nav>
@@ -205,20 +221,46 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           <div className="flex-1 overflow-y-auto space-y-3 mb-3">
             {allMessages.map((message) => (
               <div key={message.id}>
-                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-md">
-                  <p className="text-xs font-bold text-gray-700 mb-1">
+                <div
+                  className="backdrop-blur-sm rounded-2xl p-3"
+                  style={{
+                    backgroundColor: "var(--bg-card)",
+                    boxShadow: "var(--shadow-sm)",
+                  }}
+                >
+                  <p
+                    className="text-xs font-normal mb-1"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {message.role === "user" ? "User:" : "Agent:"}
                   </p>
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <p
+                    className="text-sm font-light whitespace-pre-wrap leading-relaxed"
+                    style={{ color: "var(--text-primary)" }}
+                  >
                     {message.content}
                   </p>
                 </div>
               </div>
             ))}
             {isLoading && (
-              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-md">
-                <p className="text-xs font-bold text-gray-700 mb-1">Agent:</p>
-                <p className="text-sm text-gray-700 animate-pulse">
+              <div
+                className="backdrop-blur-sm rounded-2xl p-3"
+                style={{
+                  backgroundColor: "var(--bg-card)",
+                  boxShadow: "var(--shadow-sm)",
+                }}
+              >
+                <p
+                  className="text-xs font-normal mb-1"
+                  style={{ color: "var(--text-primary)" }}
+                >
+                  Agent:
+                </p>
+                <p
+                  className="text-sm font-light animate-pulse"
+                  style={{ color: "var(--text-secondary)" }}
+                >
                   Thinking...
                 </p>
               </div>
@@ -226,19 +268,32 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           </div>
 
           {/* Session notes at bottom - fixed */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-md">
+          <div
+            className="backdrop-blur-sm rounded-2xl p-4"
+            style={{
+              backgroundColor: "var(--bg-card)",
+              boxShadow: "var(--shadow-md)",
+            }}
+          >
             <div className="flex items-center justify-between mb-2">
-              <h4 className="text-xs font-semibold text-gray-600">
+              <h4
+                className="text-xs font-normal"
+                style={{ color: "var(--text-primary)" }}
+              >
                 Session notes
               </h4>
               <button
                 onClick={() => setNotesOpen(false)}
-                className="text-xs text-gray-500 hover:text-gray-700"
+                className="text-xs font-light transition-colors cursor-pointer"
+                style={{ color: "var(--text-secondary)" }}
               >
                 Hide Chat
               </button>
             </div>
-            <p className="text-xs text-gray-400 mb-3">
+            <p
+              className="text-xs font-light mb-3"
+              style={{ color: "var(--text-muted)" }}
+            >
               Jot ideas here. AI assist coming soon.
             </p>
 
@@ -255,7 +310,11 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                 }}
                 disabled={isLoading}
                 placeholder="Type your message..."
-                className="flex-1 min-h-[60px] max-h-24 bg-white/60 rounded-xl p-2 placeholder:text-gray-400 text-gray-800 text-sm outline-none resize-none border border-gray-200"
+                className="flex-1 min-h-[60px] max-h-24 rounded-xl p-2 text-sm font-light outline-none resize-none border-0"
+                style={{
+                  backgroundColor: "var(--bg-hover)",
+                  color: "var(--text-primary)",
+                }}
               />
               <div className="flex gap-2">
                 <button
@@ -263,7 +322,12 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     e.preventDefault();
                     clearAllMessages();
                   }}
-                  className="h-10 w-10 rounded-lg bg-white/80 text-gray-600 hover:bg-white flex items-center justify-center transition-colors shadow-sm"
+                  className="h-10 w-10 rounded-lg flex items-center justify-center transition-all cursor-pointer"
+                  style={{
+                    backgroundColor: "var(--bg-hover)",
+                    color: "var(--text-secondary)",
+                    boxShadow: "var(--shadow-xs)",
+                  }}
                   title="Clear messages"
                 >
                   <FaTrash className="w-3.5 h-3.5" />
@@ -274,7 +338,11 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     handleSendMessage();
                   }}
                   disabled={!inputMessage.trim() || isLoading}
-                  className="h-10 w-10 rounded-lg bg-gradient-to-br from-purple-400 to-purple-500 text-white hover:from-purple-500 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all shadow-sm"
+                  className="h-10 w-10 rounded-lg text-white flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                  style={{
+                    backgroundColor: "var(--color-sage)",
+                    boxShadow: "var(--shadow-sm)",
+                  }}
                   title="Send message"
                 >
                   <IoSend className="w-4 h-4" />
@@ -362,10 +430,13 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
             notesOpen ? "mt-0" : "mt-0"
           }`}
         >
-          <h2 className="mb-4 text-foreground">
+          <h2
+            className="mb-4 text-2xl font-light"
+            style={{ color: "var(--text-primary)" }}
+          >
             Welcome to Your First Session
           </h2>
-          <p className="text-muted-foreground">
+          <p className="font-light" style={{ color: "var(--text-secondary)" }}>
             Choose an activity below to begin your journey of self-discovery.
             Take your time, and remember: this is a safe space.
           </p>
@@ -413,7 +484,8 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-s text-muted-foreground text-center mb-8"
+          className="text-sm font-light text-center mb-8"
+          style={{ color: "var(--text-secondary)" }}
         >
           Click any card to begin your personalized session
         </motion.p>

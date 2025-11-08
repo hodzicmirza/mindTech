@@ -30,7 +30,7 @@ export function SmallWinModal({
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         className="fixed inset-0 z-40 flex items-center justify-center p-4"
-        style={{ backgroundColor: "rgba(180, 180, 180, 0.6)" }}
+        style={{ backgroundColor: "rgba(90, 104, 117, 0.3)" }}
         onClick={onContinue}
       >
         <motion.div
@@ -38,7 +38,11 @@ export function SmallWinModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.9, y: 20 }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="bg-white rounded-3xl p-12 max-w-lg w-full text-center relative overflow-hidden shadow-xl"
+          className="rounded-3xl p-12 max-w-lg w-full text-center relative overflow-hidden"
+          style={{
+            backgroundColor: "var(--bg-card)",
+            boxShadow: "var(--shadow-lg)",
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="relative z-10">
@@ -48,7 +52,10 @@ export function SmallWinModal({
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
               className="w-32 h-32 mx-auto mb-8 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: "#c8b6e2" }}
+              style={{
+                backgroundColor: "var(--color-lavender)",
+                boxShadow: "var(--shadow-md)",
+              }}
             >
               <div className="w-24 h-24 rounded-full border-4 border-white flex items-center justify-center">
                 <CheckCircle2
@@ -63,7 +70,8 @@ export function SmallWinModal({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="mb-4 text-2xl font-medium text-gray-700"
+              className="mb-4 text-2xl font-light"
+              style={{ color: "var(--text-primary)" }}
             >
               {title}
             </motion.h2>
@@ -73,7 +81,8 @@ export function SmallWinModal({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="text-gray-500 mb-10 text-base leading-relaxed"
+              className="mb-10 text-base leading-relaxed font-light"
+              style={{ color: "var(--text-secondary)" }}
             >
               {message}
             </motion.p>
@@ -86,10 +95,11 @@ export function SmallWinModal({
             >
               <Button
                 onClick={onContinue}
-                className="w-full h-14 rounded-2xl text-lg font-medium transition-all"
+                className="w-full h-14 rounded-2xl text-lg font-light transition-all cursor-pointer"
                 style={{
-                  backgroundColor: "#8b7ba8",
+                  backgroundColor: "var(--color-sage)",
                   color: "white",
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <Sparkles className="w-5 h-5 mr-2" />

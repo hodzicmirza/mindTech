@@ -154,28 +154,34 @@ export function SelfEsteemTest({ onComplete, onBack }: SelfEsteemTestProps) {
                 <motion.button
                   key={option.value}
                   onClick={() => handleSelect(option.value)}
-                  className={`w-full p-3 rounded-xl border transition-all duration-200 text-left ${
-                    selectedValue === option.value
-                      ? "border-[#8b7ba8] bg-[#f8f6fa] shadow-md"
-                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
-                  }`}
-                  whileHover={{ scale: 1.01 }}
+                  className="w-full p-3 rounded-xl border-0 transition-all duration-200 text-left cursor-pointer"
+                  style={{
+                    backgroundColor:
+                      selectedValue === option.value
+                        ? "var(--color-sky)"
+                        : "var(--bg-card)",
+                    boxShadow:
+                      selectedValue === option.value
+                        ? "var(--shadow-md)"
+                        : "var(--shadow-sm)",
+                  }}
+                  whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.98 }}
                   animate={
                     selectedValue === option.value
                       ? {
-                          scale: [1, 1.02, 1],
-                          boxShadow: [
-                            "0px 0px 0px rgba(139, 123, 168, 0)",
-                            "0px 0px 12px rgba(139, 123, 168, 0.3)",
-                            "0px 4px 12px rgba(139, 123, 168, 0.2)",
-                          ],
+                          scale: [1, 1.01, 1],
                         }
                       : {}
                   }
                   transition={{ duration: 0.3 }}
                 >
-                  <span className="text-sm text-gray-700">{option.label}</span>
+                  <span
+                    className="text-sm font-light"
+                    style={{ color: "var(--text-primary)" }}
+                  >
+                    {option.label}
+                  </span>
                 </motion.button>
               ))}
             </div>
@@ -205,7 +211,11 @@ export function SelfEsteemTest({ onComplete, onBack }: SelfEsteemTestProps) {
               {currentQuestion > 0 && (
                 <button
                   onClick={handlePreviousQuestion}
-                  className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs text-gray-600 hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-light transition-all cursor-pointer"
+                  style={{
+                    color: "var(--text-secondary)",
+                    backgroundColor: "transparent",
+                  }}
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   Previous Question
