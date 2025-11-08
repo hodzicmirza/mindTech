@@ -254,7 +254,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                       selected={selectedDate}
                       onSelect={setSelectedDate}
                       className="rounded-2xl border-0"
-                      disabled={(date) => date < new Date()}
+                      disabled={(date: Date) => date < new Date()}
                     />
                   </div>
 
@@ -340,7 +340,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                     <Checkbox
                       id="include-report"
                       checked={includeReport}
-                      onCheckedChange={(checked) => setIncludeReport(checked as boolean)}
+                      onCheckedChange={(checked: boolean) => setIncludeReport(checked as boolean)}
                       className="mt-1"
                     />
                     <div className="flex-1">

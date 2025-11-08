@@ -41,20 +41,31 @@ export function AnalysisReport({
   };
   const keyThemes = answers.slice(0, 5);
 
+  // ensure the dynamic key is one of the known test keys so TS can index safely
+  const testKey = (problem?.toLowerCase() || "anxiety") as keyof typeof data.tests;
+
+  // helper to safely get fields from the questions array
+  const getAnswerField = (index: number, field: "description" | "suggestion") => {
+    const question = data.tests[testKey]?.[index];
+    if (!question) return undefined;
+    const found = question.answers.find((answer) => answer.answer === keyThemes[index]);
+    return found ? found[field] : undefined;
+  };
+
   const emotionalPatterns = [
-    data.tests[problem?.toLowerCase() || "anxiety"][0]["answers"].find((answer) => answer.answer === keyThemes[0])?.description,
-    data.tests[problem?.toLowerCase() || "anxiety"][1]["answers"].find((answer) => answer.answer === keyThemes[1])?.description,
-    data.tests[problem?.toLowerCase() || "anxiety"][2]["answers"].find((answer) => answer.answer === keyThemes[2])?.description,
-    data.tests[problem?.toLowerCase() || "anxiety"][3]["answers"].find((answer) => answer.answer === keyThemes[3])?.description,
-    data.tests[problem?.toLowerCase() || "anxiety"][4]["answers"].find((answer) => answer.answer === keyThemes[4])?.description,
+    getAnswerField(0, "description"),
+    getAnswerField(1, "description"),
+    getAnswerField(2, "description"),
+    getAnswerField(3, "description"),
+    getAnswerField(4, "description"),
   ];
 
   const focusAreas = [
-    data.tests[problem?.toLowerCase() || "anxiety"][0]["answers"].find((answer) => answer.answer === keyThemes[0])?.suggestion,
-    data.tests[problem?.toLowerCase() || "anxiety"][1]["answers"].find((answer) => answer.answer === keyThemes[1])?.suggestion,
-    data.tests[problem?.toLowerCase() || "anxiety"][2]["answers"].find((answer) => answer.answer === keyThemes[2])?.suggestion,
-    data.tests[problem?.toLowerCase() || "anxiety"][3]["answers"].find((answer) => answer.answer === keyThemes[3])?.suggestion,
-    data.tests[problem?.toLowerCase() || "anxiety"][4]["answers"].find((answer) => answer.answer === keyThemes[4])?.suggestion,
+    getAnswerField(0, "suggestion"),
+    getAnswerField(1, "suggestion"),
+    getAnswerField(2, "suggestion"),
+    getAnswerField(3, "suggestion"),
+    getAnswerField(4, "suggestion"),
   ];
 
   const talkingPoints = [
