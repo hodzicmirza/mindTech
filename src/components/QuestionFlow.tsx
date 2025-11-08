@@ -23,13 +23,13 @@ interface QuestionData {
 }
 
 const encouragements = [
-  "Nice work! 🌟",
-  "You're doing great! ✨",
+  "It’s not easy, but you’re showing courage. 🌼",
+  "You’re opening up — that takes strength. 🌱",
   "Small step, big progress! 💫",
   "Keep going! 🌸",
-  "Wonderful! 🎉",
+  "You’re taking an important step forward. 🌾",
   "You're making progress! 🌈",
-  "Great reflection! 💝",
+  "It’s okay to feel what you feel. 💧",
   "Thanks for sharing that! 🌺",
 ];
 

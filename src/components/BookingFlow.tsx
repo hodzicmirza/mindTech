@@ -79,7 +79,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             onClick={step === 1 ? onBack : () => setStep(step - 1)}
-            className="flex items-center gap-2 transition-colors mb-8 font-light"
+            className="flex items-center gap-2 transition-colors mb-8 font-light cursor-pointer"
             style={{ color: "var(--text-secondary)" }}
           >
             <ArrowLeft className="w-4 h-4" />
@@ -610,7 +610,7 @@ export function BookingFlow({ onComplete, onBack }: BookingFlowProps) {
                     className="text-xs font-light mt-4"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    You'll receive a confirmation email with session details
+                    You'll receive a confirmation SMS with session details
                   </p>
                 </motion.div>
               </Card>
