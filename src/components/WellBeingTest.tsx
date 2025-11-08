@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { Button } from "./ui/button";
 import { SmallWinModal } from "./SmallWinModal";
-import { ArrowLeft, Info, Sun } from "lucide-react";
+import { ArrowLeft, Info, Sun, Home } from "lucide-react";
 
 interface WellBeingTestProps {
   onComplete: (responses: number[]) => void;
@@ -33,10 +32,6 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
   const [showWinModal, setShowWinModal] = useState(false);
   const [calculatedScore, setCalculatedScore] = useState<number | null>(null);
 
-  const handleSelect = (value: number) => {
-    setSelectedValue(value);
-  };
-
   const calculateScore = (allResponses: number[]): number => {
     const sum = allResponses.reduce((acc, val) => acc + val, 0);
     return sum * 4; // Multiply by 4 to get 0-100 scale
@@ -52,9 +47,12 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
     }
   };
 
-  const handleNext = () => {
-    if (selectedValue !== null) {
-      const newResponses = [...responses, selectedValue];
+  const handleSelect = (value: number) => {
+    setSelectedValue(value);
+
+    // Automatically advance after a brief delay for visual feedback
+    setTimeout(() => {
+      const newResponses = [...responses, value];
       setResponses(newResponses);
       setSelectedValue(null);
 
@@ -66,6 +64,15 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
         setCalculatedScore(score);
         setShowWinModal(true);
       }
+    }, 300);
+  };
+
+  const handlePreviousQuestion = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      // Remove the last response
+      setResponses(responses.slice(0, -1));
+      setSelectedValue(null);
     }
   };
 
@@ -77,46 +84,52 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
   const currentQuestionText = questions[currentQuestion];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#faf8f6] via-[#f5f0eb] to-[#f0ebe6]">
+    <div className="min-h-screen bg-[#f5f0eb]">
       {/* Header */}
-      <div className="p-6 flex items-center justify-between">
+      <div className="p-4 flex items-center justify-between relative">
+        {/* Home Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/50 backdrop-blur-sm hover:bg-white/70 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white hover:bg-gray-50 transition-colors shadow-sm"
         >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back</span>
+          <Home className="w-4 h-4 text-gray-600" />
+          <span className="text-xs text-gray-600 font-medium">Home</span>
         </button>
 
-        <div className="text-center">
-          <h3>How are you feeling?</h3>
-          <p className="text-xs text-muted-foreground">
+        {/* Center Title */}
+        <div className="absolute left-1/2 transform -translate-x-1/2 text-center">
+          <h3 className="text-sm font-medium text-gray-600 mb-0.5">
+            How are you feeling?
+          </h3>
+          <p className="text-xs text-gray-400">
             Question {currentQuestion + 1} of {questions.length}
           </p>
         </div>
 
-        <div className="w-24" />
+        {/* Placeholder for alignment */}
+        <div className="w-20"></div>
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center px-4 py-12">
-        <div className="max-w-3xl w-full">
+      <div className="flex flex-col items-center justify-center px-4 py-4">
+        <div className="max-w-2xl w-full">
           {/* Info Panel */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-8 p-4 bg-white/60 backdrop-blur-sm rounded-2xl flex items-start gap-3"
+            className="mb-4 p-3 bg-white rounded-xl flex items-start gap-2.5 shadow-sm"
           >
             <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-              style={{ backgroundColor: "var(--pastel-mint)" }}
+              className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: "#a8e6cf" }}
             >
-              <Sun className="w-5 h-5 text-white" />
+              <Sun className="w-4 h-4 text-white" />
             </div>
             <div>
-              <p className="text-sm">
-                This is the WHO-5 Well-Being Index. Think about the past two weeks and select how
-                often each statement has applied to you. There are no right or wrong answers.
+              <p className="text-xs text-gray-600 leading-snug">
+                This is the WHO-5 Well-Being Index. Think about the past two
+                weeks and select how often each statement has applied to you.
+                There are no right or wrong answers.
               </p>
             </div>
           </motion.div>
@@ -128,79 +141,80 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="bg-white rounded-3xl p-8"
-            style={{ boxShadow: "var(--shadow-large)" }}
+            className="bg-white rounded-2xl p-5 shadow-lg"
           >
-            <div className="mb-8">
-              <h3 className="text-xl mb-2 text-foreground">{currentQuestionText}</h3>
-              <p className="text-sm text-muted-foreground">
+            <div className="mb-4">
+              <h3 className="text-sm font-medium mb-1.5 text-gray-700">
+                {currentQuestionText}
+              </h3>
+              <p className="text-xs text-gray-500">
                 Over the past two weeks, how often has this applied to you?
               </p>
             </div>
 
             {/* Scale Options */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-2 mb-4">
               {scaleOptions.map((option) => (
                 <motion.button
                   key={option.value}
                   onClick={() => handleSelect(option.value)}
-                  className={`w-full p-4 rounded-2xl border-2 transition-all text-left ${
+                  className={`w-full p-3 rounded-xl border transition-all duration-200 text-left ${
                     selectedValue === option.value
-                      ? "border-primary bg-primary/10"
-                      : "border-border bg-background hover:border-primary/40 hover:bg-primary/5"
+                      ? "border-[#8b7ba8] bg-[#f8f6fa] shadow-md"
+                      : "border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50"
                   }`}
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
+                  animate={
+                    selectedValue === option.value
+                      ? {
+                          scale: [1, 1.02, 1],
+                          boxShadow: [
+                            "0px 0px 0px rgba(139, 123, 168, 0)",
+                            "0px 0px 12px rgba(139, 123, 168, 0.3)",
+                            "0px 4px 12px rgba(139, 123, 168, 0.2)",
+                          ],
+                        }
+                      : {}
+                  }
+                  transition={{ duration: 0.3 }}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="text-lg font-semibold text-foreground w-8">
-                        {option.value}
-                      </span>
-                      <span className="text-sm font-medium text-foreground">{option.label}</span>
-                    </div>
-                    {selectedValue === option.value && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="w-6 h-6 rounded-full bg-primary flex items-center justify-center"
-                      >
-                        <span className="text-white text-xs">✓</span>
-                      </motion.div>
-                    )}
-                  </div>
+                  <span className="text-sm text-gray-700">{option.label}</span>
                 </motion.button>
               ))}
             </div>
 
-            {/* Progress and Navigation */}
-            <div className="space-y-4">
-              {/* Progress dots */}
-              <div className="flex gap-2 justify-center">
+            {/* Progress dots and Back Button */}
+            <div className="space-y-3 pt-2">
+              <div className="flex gap-1.5 justify-center">
                 {questions.map((_, i) => (
                   <div
                     key={i}
                     className="w-2 h-2 rounded-full transition-colors duration-300"
                     style={{
                       backgroundColor:
-                        i < currentQuestion
-                          ? "var(--pastel-mint)"
-                          : i === currentQuestion
-                            ? "var(--pastel-mint)"
-                            : "var(--muted)",
-                      opacity: i === currentQuestion ? 1 : i < currentQuestion ? 0.6 : 0.3,
+                        i <= currentQuestion ? "#a8e6cf" : "#d1d5db",
+                      opacity:
+                        i === currentQuestion
+                          ? 1
+                          : i < currentQuestion
+                          ? 0.7
+                          : 0.4,
                     }}
                   />
                 ))}
               </div>
 
-              <Button
-                onClick={handleNext}
-                disabled={selectedValue === null}
-                className="w-full h-12 rounded-2xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50"
-              >
-                {currentQuestion < questions.length - 1 ? "Next Question" : "Complete Test"}
-              </Button>
+              {/* Back Button */}
+              {currentQuestion > 0 && (
+                <button
+                  onClick={handlePreviousQuestion}
+                  className="w-full flex items-center justify-center gap-2 py-2 rounded-lg text-xs text-gray-600 hover:bg-gray-50 transition-colors"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  Previous Question
+                </button>
+              )}
             </div>
           </motion.div>
         </div>
@@ -212,7 +226,9 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
         title="Well-Being Assessment Complete! 🎉"
         message={
           calculatedScore !== null
-            ? `Your well-being score is ${calculatedScore} out of 100. ${getScoreInterpretation(calculatedScore)}`
+            ? `Your well-being score is ${calculatedScore} out of 100. ${getScoreInterpretation(
+                calculatedScore
+              )}`
             : "You've completed all 5 questions. Your responses help us understand your overall well-being."
         }
         onContinue={handleContinue}
@@ -220,4 +236,3 @@ export function WellBeingTest({ onComplete, onBack }: WellBeingTestProps) {
     </div>
   );
 }
-

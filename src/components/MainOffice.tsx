@@ -179,82 +179,71 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         </motion.div>
       </nav>
 
-      {/* Chat panel – force bottom-left positioning */}
+      {/* Chat panel – transparent with only message bubbles visible */}
       <motion.aside
         role="dialog"
-        aria-label="Notes"
+        aria-label="Chat"
         aria-modal="false"
-        className="fixed z-50 w-full max-w-md"
-        initial={{ opacity: 0, scale: 0.98 }}
+        className="fixed z-50"
+        initial={{ opacity: 0 }}
         animate={{
           opacity: notesOpen ? 1 : 0,
-          scale: notesOpen ? 1 : 0.98,
         }}
-        transition={{ type: "spring", stiffness: 260, damping: 22 }}
+        transition={{ duration: 0.3 }}
         style={{
           pointerEvents: notesOpen ? "auto" : "none",
           left: 16,
           bottom: 16,
-          top: "auto",
+          top: 280,
           right: "auto",
+          width: "calc(100vw - 32px)",
+          maxWidth: "450px",
         }}
       >
-        <div className="overflow-y-auto rounded-2xl bg-white/80 backdrop-blur-sm ro space-y-3">
-          {allMessages.length === 0
-            ? null
-            : allMessages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex ${
-                    message.role === "user" ? "justify-end" : "justify-start"
-                  }`}
-                >
-                  <div
-                    className={`max-w-[80%] rounded-2xl p-3 text-sm ${
-                      message.role === "user"
-                        ? "bg-gradient-to-br from-purple-100 to-purple-50 text-gray-800 shadow-sm"
-                        : "bg-gradient-to-br from-gray-50 to-white text-gray-800 shadow-sm border border-gray-100"
-                    }`}
-                  >
-                    <p className="font-semibold text-xs mb-1.5 opacity-70">
-                      {message.role === "user" ? "You" : "AI Agent"}
-                    </p>
-                    <p className="whitespace-pre-wrap leading-relaxed">
-                      {message.content}
-                    </p>
-                  </div>
+        <div className="h-full flex flex-col">
+          {/* All messages - scrollable area */}
+          <div className="flex-1 overflow-y-auto space-y-3 mb-3">
+            {allMessages.map((message) => (
+              <div key={message.id}>
+                <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-md">
+                  <p className="text-xs font-bold text-gray-700 mb-1">
+                    {message.role === "user" ? "User:" : "Agent:"}
+                  </p>
+                  <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                    {message.content}
+                  </p>
                 </div>
-              ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-gradient-to-br from-gray-50 to-white text-gray-800 rounded-2xl p-3 text-sm max-w-[80%] shadow-sm border border-gray-100">
-                <p className="font-semibold text-xs mb-1.5 opacity-70">
-                  AI Agent
-                </p>
-                <p className="animate-pulse">Thinking...</p>
               </div>
-            </div>
-          )}
-        </div>
-        <div className="w-full rounded-2xl p-4 bg-white/90 backdrop-blur-md border-t border-gray-200/50 flex flex-col gap-3 will-change-transform">
-          {/* Header */}
-
-          <div className="flex items-center justify-between gap-2 mb-2">
-            <h3 className="text-sm font-semibold text-gray-700">
-              Chat with AI
-            </h3>
-            <button
-              onClick={() => setNotesOpen(false)}
-              className="mr-2 h-8 px-4 rounded-lg text-xs font-semibold bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
-            >
-              ✕
-            </button>
+            ))}
+            {isLoading && (
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-3 shadow-md">
+                <p className="text-xs font-bold text-gray-700 mb-1">Agent:</p>
+                <p className="text-sm text-gray-700 animate-pulse">
+                  Thinking...
+                </p>
+              </div>
+            )}
           </div>
 
-          {/* Chat Messages Container - SCROLLABLE */}
-          <div className="flex-1 overflow-hidden flex flex-col min-h-0">
+          {/* Session notes at bottom - fixed */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-md">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="text-xs font-semibold text-gray-600">
+                Session notes
+              </h4>
+              <button
+                onClick={() => setNotesOpen(false)}
+                className="text-xs text-gray-500 hover:text-gray-700"
+              >
+                Hide Chat
+              </button>
+            </div>
+            <p className="text-xs text-gray-400 mb-3">
+              Jot ideas here. AI assist coming soon.
+            </p>
+
             {/* Input Area */}
-            <div className="flex items-center gap-2 bg-white/60 rounded-xl p-2 border border-gray-200/50">
+            <div className="flex items-end gap-2">
               <textarea
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
@@ -265,28 +254,30 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                   }
                 }}
                 disabled={isLoading}
-                placeholder="Share your thoughts..."
-                className="flex-1 min-h-[60px] max-h-24 bg-transparent placeholder:text-gray-400 text-gray-800 text-sm outline-none resize-none"
+                placeholder="Type your message..."
+                className="flex-1 min-h-[60px] max-h-24 bg-white/60 rounded-xl p-2 placeholder:text-gray-400 text-gray-800 text-sm outline-none resize-none border border-gray-200"
               />
-              <div className="flex flex-col gap-2">
+              <div className="flex gap-2">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    clearAllMessages();
+                  }}
+                  className="h-10 w-10 rounded-lg bg-white/80 text-gray-600 hover:bg-white flex items-center justify-center transition-colors shadow-sm"
+                  title="Clear messages"
+                >
+                  <FaTrash className="w-3.5 h-3.5" />
+                </button>
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     handleSendMessage();
                   }}
                   disabled={!inputMessage.trim() || isLoading}
-                  className="h-9 w-9 rounded-lg bg-gradient-to-br from-purple-400 to-purple-500 text-white hover:from-purple-500 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all shadow-sm"
+                  className="h-10 w-10 rounded-lg bg-gradient-to-br from-purple-400 to-purple-500 text-white hover:from-purple-500 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center transition-all shadow-sm"
+                  title="Send message"
                 >
                   <IoSend className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    clearAllMessages();
-                  }}
-                  className="h-9 w-9 rounded-lg bg-gray-200 text-gray-600 hover:bg-gray-300 flex items-center justify-center transition-colors"
-                >
-                  <FaTrash className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
@@ -303,11 +294,12 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     flex flex-col items-center
                     ${notesOpen ? "justify-center" : "justify-start"}`}
       >
-        {/* Avatar floats to top-left when panel opens */}
+        {/* Avatar floats to left side when panel opens */}
         {notesOpen && (
           <motion.div
             layoutId="session-avatar"
-            className="absolute top-20 left-[-100px] z-30 w-30 h-30 rounded-full overflow-hidden  border-white "
+            className="fixed left-8 z-40 w-24 h-24 rounded-full overflow-hidden shadow-xl border-4 border-white"
+            style={{ top: "140px" }}
           >
             <img
               src="/src/public/Male1.png"
@@ -391,7 +383,6 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
             <div
               aria-hidden
               className="absolute -inset-6 sm:-inset-8 rounded-[2rem] sm:rounded-[3rem]"
-              
             />
             <div
               className="relative flex flex-col /* mobile-first: kolona */
@@ -404,7 +395,6 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.35 + index * 0.08 }}
-                  
                 >
                   <ActivityCard
                     title={activity.title}

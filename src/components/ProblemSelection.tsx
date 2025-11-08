@@ -4,7 +4,11 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { X, Heart, Brain, Zap, Plus, Loader2 } from "lucide-react";
-import { generateQuestionsFromText, storeCustomQuestions, getCustomQuestions } from "../utils/generateQuestions";
+import {
+  generateQuestionsFromText,
+  storeCustomQuestions,
+  getCustomQuestions,
+} from "../utils/generateQuestions";
 
 interface ProblemSelectionProps {
   isOpen: boolean;
@@ -12,7 +16,11 @@ interface ProblemSelectionProps {
   onSelect: (problem: string) => void;
 }
 
-export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelectionProps) {
+export function ProblemSelection({
+  isOpen,
+  onClose,
+  onSelect,
+}: ProblemSelectionProps) {
   const [selectedProblem, setSelectedProblem] = useState<string | null>(null);
   const [customIssue, setCustomIssue] = useState("");
   const [showCustomInput, setShowCustomInput] = useState(false);
@@ -22,8 +30,18 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
   if (!isOpen) return null;
 
   const problems = [
-    { id: "anxiety", label: "Anxiety", icon: Heart, color: "var(--pastel-lavender)" },
-    { id: "depression", label: "Depression", icon: Brain, color: "var(--pastel-sky)" },
+    {
+      id: "anxiety",
+      label: "Anxiety",
+      icon: Heart,
+      color: "var(--pastel-lavender)",
+    },
+    {
+      id: "depression",
+      label: "Depression",
+      icon: Brain,
+      color: "var(--pastel-sky)",
+    },
     { id: "adhd", label: "ADHD", icon: Zap, color: "var(--pastel-mint)" },
   ];
 
@@ -31,7 +49,7 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
     if (selectedProblem === "custom" && customIssue.trim()) {
       // Check if questions already exist in localStorage
       const existingQuestions = getCustomQuestions(customIssue);
-      
+
       if (existingQuestions) {
         // Use existing questions
         onSelect(customIssue);
@@ -39,14 +57,18 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
         // Generate new questions
         setIsGenerating(true);
         setError(null);
-        
+
         try {
           const questions = await generateQuestionsFromText(customIssue);
           storeCustomQuestions(customIssue, questions);
           onSelect(customIssue);
         } catch (err) {
           console.error("Error generating questions:", err);
-          setError(err instanceof Error ? err.message : "Failed to generate questions. Please try again.");
+          setError(
+            err instanceof Error
+              ? err.message
+              : "Failed to generate questions. Please try again."
+          );
           setIsGenerating(false);
         }
       }
@@ -61,31 +83,33 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-gray-500/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
       onClick={onClose}
     >
       <motion.div
-        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+        initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+        exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="bg-white rounded-3xl p-8 max-w-2xl w-full relative"
-        style={{ boxShadow: "var(--shadow-large)" }}
+        className="bg-white rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 rounded-xl bg-muted hover:bg-muted/80 flex items-center justify-center transition-colors"
+          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
         >
-          <X className="w-5 h-5" />
+          <X className="w-5 h-5 text-gray-600" />
         </button>
 
         {/* Header */}
-        <div className="mb-8">
-          <h2 className="mb-2">What do you want to work on today?</h2>
-          <p className="text-muted-foreground">
-            Select an area you'd like to explore. This helps personalize your session.
+        <div className="mb-8 pr-12">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+            What do you want to work on today?
+          </h2>
+          <p className="text-gray-500 text-base">
+            Select an area you'd like to explore. This helps personalize your
+            session.
           </p>
         </div>
 
@@ -95,6 +119,24 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
             const Icon = problem.icon;
             const isSelected = selectedProblem === problem.id;
 
+            const colorClasses = {
+              anxiety: "bg-purple-100",
+              depression: "bg-blue-100",
+              adhd: "bg-teal-100",
+            };
+
+            const iconColorClasses = {
+              anxiety: "bg-purple-400",
+              depression: "bg-blue-400",
+              adhd: "bg-teal-400",
+            };
+
+            const checkColorClasses = {
+              anxiety: "bg-purple-500",
+              depression: "bg-blue-500",
+              adhd: "bg-teal-500",
+            };
+
             return (
               <motion.button
                 key={problem.id}
@@ -102,41 +144,49 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
                   setSelectedProblem(problem.id);
                   setShowCustomInput(false);
                 }}
-                whileHover={{ scale: 1.03 }}
+                whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className={`p-6 rounded-2xl border-2 transition-all ${
+                className={`p-6 rounded-2xl border-2 transition-all relative ${
                   isSelected
-                    ? "border-primary shadow-lg"
-                    : "border-border hover:border-primary/30"
+                    ? "border-purple-300 bg-purple-50/30 shadow-md"
+                    : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
                 }`}
-                style={{
-                  backgroundColor: isSelected ? `${problem.color}20` : "white",
-                }}
               >
                 <div
-                  className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                  style={{ backgroundColor: problem.color }}
+                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
+                    iconColorClasses[
+                      problem.id as keyof typeof iconColorClasses
+                    ]
+                  }`}
                 >
-                  <Icon className="w-7 h-7 text-white" />
+                  <Icon className="w-8 h-8 text-white" />
                 </div>
-                <p className="text-center">{problem.label}</p>
-                
+                <p className="text-center font-medium text-gray-700">
+                  {problem.label}
+                </p>
+
+                {/* Checkmark indicator */}
                 {isSelected && (
                   <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="w-6 h-6 rounded-full bg-primary flex items-center justify-center mx-auto mt-3"
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ type: "spring", stiffness: 500, damping: 25 }}
+                    className={`absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center ${
+                      checkColorClasses[
+                        problem.id as keyof typeof checkColorClasses
+                      ]
+                    }`}
                   >
                     <svg
                       className="w-4 h-4 text-white"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      strokeWidth={3}
                     >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth={2}
                         d="M5 13l4 4L19 7"
                       />
                     </svg>
@@ -154,22 +204,21 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
               setShowCustomInput(!showCustomInput);
               setSelectedProblem(showCustomInput ? null : "custom");
             }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`w-full p-4 rounded-2xl border-2 transition-all ${
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className={`w-full p-5 rounded-2xl border-2 transition-all ${
               selectedProblem === "custom"
-                ? "border-primary bg-primary/5"
-                : "border-border hover:border-primary/30"
+                ? "border-gray-300 bg-gray-50 shadow-sm"
+                : "border-gray-200 bg-white hover:border-gray-300"
             }`}
           >
             <div className="flex items-center justify-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "var(--pastel-peach)" }}
-              >
-                <Plus className="w-5 h-5 text-white" />
+              <div className="w-12 h-12 rounded-full bg-orange-300 flex items-center justify-center">
+                <Plus className="w-6 h-6 text-white" />
               </div>
-              <p>Something else (custom)</p>
+              <p className="text-gray-600 font-medium">
+                Something else (custom)
+              </p>
             </div>
           </motion.button>
 
@@ -184,7 +233,7 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
                 value={customIssue}
                 onChange={(e) => setCustomIssue(e.target.value)}
                 placeholder="Describe what you'd like to work on..."
-                className="h-12 rounded-2xl border-2 border-primary/20 focus:border-primary/40"
+                className="h-12 rounded-xl border-2 border-gray-200 focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
               />
             </motion.div>
           )}
@@ -202,24 +251,30 @@ export function ProblemSelection({ isOpen, onClose, onSelect }: ProblemSelection
         )}
 
         {/* Continue button */}
-        <Button
+        <button
           onClick={handleContinue}
           disabled={
-            !selectedProblem || 
+            !selectedProblem ||
             (selectedProblem === "custom" && !customIssue.trim()) ||
             isGenerating
           }
-          className="w-full h-12 rounded-2xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50"
+          className={`w-full h-14 rounded-2xl font-semibold text-white transition-all ${
+            !selectedProblem ||
+            (selectedProblem === "custom" && !customIssue.trim()) ||
+            isGenerating
+              ? "bg-purple-200 cursor-not-allowed"
+              : "bg-purple-300 hover:bg-purple-400 active:scale-98 shadow-sm"
+          }`}
         >
           {isGenerating ? (
-            <div className="flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin" />
+            <div className="flex items-center justify-center gap-2">
+              <Loader2 className="w-5 h-5 animate-spin" />
               <span>Generating questions...</span>
             </div>
           ) : (
             "Continue"
           )}
-        </Button>
+        </button>
       </motion.div>
     </motion.div>
   );

@@ -54,26 +54,24 @@ export function QuestionCard({
       animate={{ opacity: 1, y: 0, rotateY: 0 }}
       exit={{ opacity: 0, y: -20, rotateY: 15 }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="relative w-full max-w-lg"
+      className="relative w-full max-w-lg mx-auto"
     >
-      <div
-        className="bg-white rounded-3xl p-8 relative overflow-hidden"
-        style={{ boxShadow: "var(--shadow-large)" }}
-      >
+      <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-6 sm:p-8 relative overflow-hidden shadow-2xl border border-gray-100">
+        {/* Decorative gradient top bar */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-blue-400 to-teal-400" />
+
         {/* Progress indicator */}
-        <div className="flex items-center justify-between mb-6">
-          <span className="text-sm text-muted-foreground">
-            Card {currentCard} of {totalCards}
+        <div className="flex items-center justify-between mb-6 pt-2">
+          <span className="text-sm font-medium text-gray-600">
+            Question {currentCard} of {totalCards}
           </span>
-          <div className="flex gap-1">
+          <div className="flex gap-1.5">
             {Array.from({ length: totalCards }).map((_, i) => (
               <div
                 key={i}
-                className="w-2 h-2 rounded-full transition-colors duration-300"
-                style={{
-                  backgroundColor:
-                    i < currentCard ? "var(--pastel-lavender)" : "var(--muted)",
-                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i < currentCard ? "bg-purple-500 scale-110" : "bg-gray-300"
+                }`}
               />
             ))}
           </div>
@@ -83,21 +81,23 @@ export function QuestionCard({
         {!hideContent && (
           <>
             {/* Question */}
-            <h3 className="mb-8 text-center text-foreground">{question}</h3>
+            <h3 className="mb-8 text-xl sm:text-2xl font-semibold text-center text-gray-800 leading-relaxed">
+              {question}
+            </h3>
 
             {/* Answer options */}
-            <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {answerOptions.map((option, index) => (
                   <motion.button
                     key={index}
                     onClick={() => setSelectedAnswer(option.answer)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`h-14 rounded-2xl border-2 transition-all text-sm font-medium ${
+                    whileHover={{ scale: 1.03, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`min-h-[56px] px-4 py-3 rounded-2xl border-2 transition-all duration-200 text-sm font-semibold ${
                       selectedAnswer === option.answer
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-primary/20 hover:border-primary/40 text-foreground"
+                        ? "border-purple-500 bg-purple-50 text-purple-700 shadow-lg shadow-purple-100"
+                        : "border-gray-200 bg-white hover:border-purple-300 hover:bg-purple-50/50 text-gray-700 hover:shadow-md"
                     }`}
                   >
                     {option.answer}
@@ -105,13 +105,19 @@ export function QuestionCard({
                 ))}
               </div>
 
-              <Button
+              <motion.button
                 onClick={handleNext}
                 disabled={!selectedAnswer}
-                className="w-full h-12 rounded-2xl bg-primary hover:bg-primary/90 transition-all disabled:opacity-50"
+                whileHover={selectedAnswer ? { scale: 1.02 } : {}}
+                whileTap={selectedAnswer ? { scale: 0.98 } : {}}
+                className={`w-full h-12 rounded-2xl font-semibold text-white transition-all duration-200 ${
+                  selectedAnswer
+                    ? "bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 shadow-lg shadow-purple-200 cursor-pointer"
+                    : "bg-gray-300 cursor-not-allowed opacity-60"
+                }`}
               >
-                Next Card
-              </Button>
+                {currentCard === totalCards ? "Complete" : "Next Question"}
+              </motion.button>
             </div>
           </>
         )}
@@ -119,28 +125,25 @@ export function QuestionCard({
         {/* Encouragement text with animation */}
         {showEncouragement && encouragementText && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            className="absolute inset-0 flex items-center justify-center bg-white/95 backdrop-blur-sm rounded-3xl z-10"
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-50 to-blue-50 backdrop-blur-md rounded-3xl z-10"
           >
-            <motion.p
-              initial={{ y: 20 }}
-              animate={{ y: 0 }}
-              className="text-primary text-center px-8"
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="text-center px-8"
             >
-              {encouragementText}
-            </motion.p>
+              <p className="text-xl sm:text-2xl font-semibold text-purple-600 mb-2">
+                Great choice! ✨
+              </p>
+              <p className="text-gray-600">{encouragementText}</p>
+            </motion.div>
           </motion.div>
         )}
-
-        {/* Decorative gradient */}
-        <div
-          className="absolute top-0 left-0 w-full h-1 rounded-t-3xl"
-          style={{
-            background: `linear-gradient(90deg, var(--pastel-lavender), var(--pastel-sky), var(--pastel-mint))`,
-          }}
-        />
       </div>
     </motion.div>
   );
