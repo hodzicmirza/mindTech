@@ -119,23 +119,43 @@ export function ProblemSelection({
             const Icon = problem.icon;
             const isSelected = selectedProblem === problem.id;
 
-            const colorClasses = {
-              anxiety: "bg-purple-100",
-              depression: "bg-blue-100",
-              adhd: "bg-teal-100",
+            // map backgrounds (use hex/rgb literals for all)
+            const iconBgMap: Record<string, string> = {
+              anxiety: "#ffb6c1",
+              depression: "rgb(168, 213, 247)",
+              adhd: "rgb(168, 230, 207)",
             };
 
-            const iconColorClasses = {
-              anxiety: "bg-purple-400",
-              depression: "bg-blue-400",
-              adhd: "bg-teal-400",
+            const checkBgMap: Record<string, string> = {
+              anxiety: "#ffb6c1",
+              depression: "rgb(168, 213, 247)",
+              adhd: "rgb(168, 230, 207)",
             };
 
-            const checkColorClasses = {
-              anxiety: "bg-purple-500",
-              depression: "bg-blue-500",
-              adhd: "bg-teal-500",
-            };
+            const isColorLiteral = (s: string) =>
+              s.trim().startsWith("#") || s.trim().startsWith("rgb");
+
+            // button class (we use inline style for anxiety-selected to apply hex color)
+            const buttonClass = `p-6 rounded-2xl border-2 transition-all relative ${
+              isSelected ? "shadow-md" : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
+            }`;
+
+            const buttonStyle =
+              isSelected && problem.id === "anxiety"
+                ? { backgroundColor: "rgba(255,182,193,0.15)", borderColor: "#ffb6c1" }
+                : undefined;
+
+            const iconBg = iconBgMap[problem.id];
+            const iconClass = `w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
+              !isColorLiteral(iconBg) ? iconBg : ""
+            }`;
+            const iconStyle = isColorLiteral(iconBg) ? { backgroundColor: iconBg } : undefined;
+
+            const checkBg = checkBgMap[problem.id];
+            const checkClass = `absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center ${
+              !isColorLiteral(checkBg) ? checkBg : ""
+            }`;
+            const checkStyle = isColorLiteral(checkBg) ? { backgroundColor: checkBg } : undefined;
 
             return (
               <motion.button
@@ -146,19 +166,10 @@ export function ProblemSelection({
                 }}
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                className={`p-6 rounded-2xl border-2 transition-all relative ${
-                  isSelected
-                    ? "border-purple-300 bg-purple-50/30 shadow-md"
-                    : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-sm"
-                }`}
+                className={buttonClass}
+                style={buttonStyle}
               >
-                <div
-                  className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 ${
-                    iconColorClasses[
-                      problem.id as keyof typeof iconColorClasses
-                    ]
-                  }`}
-                >
+                <div className={iconClass} style={iconStyle}>
                   <Icon className="w-8 h-8 text-white" />
                 </div>
                 <p className="text-center font-medium text-gray-700">
@@ -171,11 +182,8 @@ export function ProblemSelection({
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                    className={`absolute bottom-4 left-1/2 -translate-x-1/2 w-7 h-7 rounded-full flex items-center justify-center ${
-                      checkColorClasses[
-                        problem.id as keyof typeof checkColorClasses
-                      ]
-                    }`}
+                    className={checkClass}
+                    style={checkStyle}
                   >
                     <svg
                       className="w-4 h-4 text-white"
