@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
 import { FaTrash } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
-import  AmongUS from "./AmonUS";
+import AmongUS from "./AmonUS";
 import {
   Sun,
   Heart,
@@ -358,7 +358,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
       <motion.main
         layout
         transition={{ type: "spring", stiffness: 220, damping: 24 }}
-        className={`relative z-10 mx-auto w-full max-w-5xl px-4
+        className={`relative z-10 mx-auto w-full w-100% px-4
                     min-h-[calc(100vh-120px)]
                     flex flex-col items-center
                     ${notesOpen ? "justify-center" : "justify-start"}`}
@@ -367,17 +367,26 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         {notesOpen && (
           <motion.div
             layoutId="session-avatar"
-            className="fixed left-8 z-40 w-24 h-24 rounded-full overflow-hidden "
+            className="fixed left-8 z-40 w-24 h-24 rounded-full overflow-hidden cursor-pointer"
             style={{ top: "140px" }}
+            animate={{
+              boxShadow: [
+                "0 0 20px 8px rgba(184, 207, 197, 0.6), 0 0 40px 15px rgba(216, 204, 230, 0.4)",
+                "0 0 35px 12px rgba(216, 204, 230, 0.8), 0 0 60px 25px rgba(207, 227, 240, 0.5)",
+                "0 0 25px 10px rgba(207, 227, 240, 0.7), 0 0 50px 20px rgba(209, 232, 221, 0.45)",
+                "0 0 30px 11px rgba(209, 232, 221, 0.65), 0 0 55px 22px rgba(184, 207, 197, 0.5)",
+                "0 0 22px 9px rgba(216, 204, 230, 0.6), 0 0 45px 18px rgba(207, 227, 240, 0.4)",
+              ],
+            }}
           >
             <img
               src="/src/public/Male1.png"
               alt="AI Agent"
-              onClick={(e)=>{
+              onClick={(e) => {
                 e.preventDefault();
-                setNotesOpen(false)
+                setNotesOpen(false);
               }}
-              className="w-full h-full object-cover cursor-pointer"
+              className="w-full h-full object-cover"
             />
           </motion.div>
         )}
@@ -470,7 +479,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                   key={activity.id}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35  }}
+                  transition={{ delay: 0.35 }}
                 >
                   <ActivityCard
                     title={activity.title}
@@ -478,7 +487,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     color={activity.color}
                     onClick={() => onActivitySelect(activity.id)}
                   />
-                  </motion.div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -495,8 +504,6 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           Click any card to begin your personalized session
         </motion.p>
       </motion.main>
-
-  
     </div>
   );
 }
