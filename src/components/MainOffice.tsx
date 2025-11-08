@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 
+
 interface MainOfficeProps {
   onActivitySelect: (activity: string) => void;
 }
