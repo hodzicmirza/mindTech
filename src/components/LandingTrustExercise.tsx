@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Check, HelpCircle, Shield, Sparkles } from "lucide-react";
 import { QuestionCard } from "./QuestionCard";
+import AmonUS from "./AmonUS";
 /**
  * LandingTrustExercise
  * A 2–3 minute, privacy-first micro‑exercise for your homepage to build trust before sign-up.
@@ -34,7 +35,7 @@ const tips: Record<string, string[]> = {
 };
 
 export default function LandingTrustExercise({ onStart }: Props) {
-  const [phase, setPhase] = useState<"breath" |"cofeeTea"| "done">(
+  const [phase, setPhase] = useState<"breath" |"cofeeTea"| "miniGame" | "done">(
     "breath"
   );
   const [timer, setTimer] = useState(0);
@@ -186,11 +187,14 @@ export default function LandingTrustExercise({ onStart }: Props) {
             >
               Choose your beverage of choice.
             </p>
-            <QuestionCard question="Coffee or tea?" answerOptions={[{ answer: "Coffee", description: "Coffee is a great way to start your day.", suggestion: "Coffee is a great way to start your day." }, { answer: "Tea", description: "Tea is a great way to relax.", suggestion: "Tea is a great way to relax." }]} currentCard={1} totalCards={2} onNext={() => setPhase("done")} />
+            <QuestionCard question="Coffee or tea?" answerOptions={[{ answer: "Coffee", description: "Coffee is a great way to start your day.", suggestion: "Coffee is a great way to start your day." }, { answer: "Tea", description: "Tea is a great way to relax.", suggestion: "Tea is a great way to relax." }]} currentCard={1} totalCards={2} onNext={() => setPhase("miniGame")} />
           </div>
         </section>
       )}
 
+      {phase === "miniGame" && (
+        <AmonUS onComplete={() => setPhase("done")} />
+      )}
       {phase === "done" && (
         <section className="text-center space-y-4">
           <div
