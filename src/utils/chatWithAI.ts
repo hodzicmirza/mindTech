@@ -1,5 +1,6 @@
+const API_KEY = import.meta.env.VITE_API_KEY;
+console.log(API_KEY);
 
-const API_KEY = "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";
 export const chatWithAI = async (
   message: string, 
   model: string = "openrouter/polaris-alpha"

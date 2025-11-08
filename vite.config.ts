@@ -6,6 +6,9 @@
 
   export default defineConfig({
     plugins: [react(),tailwindcss(),],
+    define:{
+      'import.meta.env': process.env
+    },
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {

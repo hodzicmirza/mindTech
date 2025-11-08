@@ -115,7 +115,7 @@ export default function App() {
         src={"/src/public/RelaxingBackgroundMusic.mp3"} // Path to your audio file
         playing={true} // Start playing
         loop={true}   // Continuous playback
-        volume={0.1}  // Set desired volume
+        volume={0.3}  // Set desired volume
         height="0"    // Hide the player
         width="0"
       />
