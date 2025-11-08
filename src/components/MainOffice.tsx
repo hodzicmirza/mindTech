@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { ActivityCard } from "./ActivityCard";
 import { FaTrash } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
 import AmongUS from "./AmonUS";
+
 import {
   Sun,
   Heart,
@@ -33,6 +34,30 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [userMessages, setUserMessages] = useState<Message[]>([]); // Korisničke poruke
   const [aiMessages, setAIMessages] = useState<Message[]>([]); // AI poruke
+
+  // State za bubble
+  const [showBubble, setShowBubble] = useState(false);
+  const [bubblePosition, setBubblePosition] = useState(0);
+
+  // Efekt za animaciju bubble-a gore-dole
+  useEffect(() => {
+    if (!showBubble) return;
+
+    const interval = setInterval(() => {
+      setBubblePosition(prev => (prev === 0 ? -5 : 0));
+    }, 1500);
+
+    return () => clearInterval(interval);
+  }, [showBubble]);
+
+
+
+  // Auto-hide bubble kada korisnik tipka
+  useEffect(() => {
+    if (inputMessage.trim().length > 0) {
+      setShowBubble(false);
+    }
+  }, [inputMessage]);
 
   // Funkcija za slanje poruke AI-u
   const handleSendMessage = async () => {
@@ -78,11 +103,9 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
       setIsLoading(false);
     }
   };
-  //////////////////////////////////////
 
   useEffect(() => {
     console.log("AI: ", aiMessages);
-
     console.log("USER: ", userMessages);
   }, [aiMessages, userMessages]);
 
@@ -103,6 +126,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
 
     return combined;
   };
+
   const [notesOpen, setNotesOpen] = useState(false);
   const [notes, setNotes] = useState("");
   let allMessages = getAllMessages();
@@ -133,6 +157,18 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
       id: "well-being",
     },
   ];
+  // Efekt za prikaz bubble-a nakon određenog vremena
+  useEffect(() => {
+    // Sakrij bubble prvo
+    setShowBubble(false);
+
+    // Zatim prikaži nakon delay-a
+    const timer = setTimeout(() => {
+      setShowBubble(true);
+    }, notesOpen ? 1200 : 800);
+
+    return () => clearTimeout(timer);
+  }, [notesOpen]);
 
   return (
     <div
@@ -354,7 +390,7 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
         </div>
       </motion.aside>
 
-      {/* Main content: kolona + raste preko min visine; centrira se kad je chat otvoren */}
+      {/* Main content */}
       <motion.main
         layout
         transition={{ type: "spring", stiffness: 220, damping: 24 }}
@@ -363,76 +399,125 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
                     flex flex-col items-center
                     ${notesOpen ? "justify-center" : "justify-start"}`}
       >
-        {/* Avatar floats to left side when panel opens */}
-        {notesOpen && (
-          <motion.div
-            layoutId="session-avatar"
-            className="fixed left-8 z-40 w-24 h-24 rounded-full overflow-hidden cursor-pointer"
-            style={{ top: "140px" }}
-            animate={{
-              boxShadow: [
-                "0 0 20px 8px rgba(184, 207, 197, 0.6), 0 0 40px 15px rgba(216, 204, 230, 0.4)",
-                "0 0 35px 12px rgba(216, 204, 230, 0.8), 0 0 60px 25px rgba(207, 227, 240, 0.5)",
-                "0 0 25px 10px rgba(207, 227, 240, 0.7), 0 0 50px 20px rgba(209, 232, 221, 0.45)",
-                "0 0 30px 11px rgba(209, 232, 221, 0.65), 0 0 55px 22px rgba(184, 207, 197, 0.5)",
-                "0 0 22px 9px rgba(216, 204, 230, 0.6), 0 0 45px 18px rgba(207, 227, 240, 0.4)",
-              ],
-            }}
-          >
-            <img
-              src="/src/public/Male1.png"
-              alt="AI Agent"
-              onClick={(e) => {
-                e.preventDefault();
-                setNotesOpen(false);
-              }}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        )}
-        {/* Center avatar (moves into panel on click) */}
-        {!notesOpen && (
-          <motion.button
-            type="button"
-            layoutId="session-avatar"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ delay: 0.15 }}
-            onClick={() => setNotesOpen(true)}
-            className="relative mt-20 mb-6 rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-outline)] cursor-pointer"
-            aria-label="Open notes panel"
-          >
-            {/* Glowing background effect */}
-            <motion.div
-              className="absolute inset-0 rounded-full "
-              animate={{
-                boxShadow: [
-                  "0 0 20px 10px rgba(139, 127, 184, 0.4)",
-                  "0 0 40px 20px rgba(139, 127, 184, 0.6)",
-                  "0 0 20px 10px rgba(139, 127, 184, 0.4)",
-                ],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              style={{
-                background:
-                  "radial-gradient(circle, rgba(139, 127, 184, 0.3) 0%, transparent 70%)",
-              }}
-            />
-            <div className="relative w-35 h-35 sm:w-35 sm:h-35 rounded-full overflow-hidden shadow-2xl  ring-white/20 transition-transform">
-              <img
-                src="/src/public/Male1.png"
-                alt="AI Agent"
-                className="w-full h-full object-cover"
-              />
+        {/* Avatar i bubble */}
+        <AnimatePresence mode="sync">
+          {notesOpen ? (
+            <div className="relative">
+
+              {/* Avatar kada je panel otvoren */}
+              <motion.div
+                layoutId="session-avatar"
+                className="fixed left-8 z-40 w-24 h-24 rounded-full overflow-hidden cursor-pointer"
+                style={{ top: "140px" }}
+                animate={{
+                  boxShadow: [
+                    "0 0 20px 8px rgba(184, 207, 197, 0.6), 0 0 40px 15px rgba(216, 204, 230, 0.4)",
+                    "0 0 35px 12px rgba(216, 204, 230, 0.8), 0 0 60px 25px rgba(207, 227, 240, 0.5)",
+                    "0 0 25px 10px rgba(207, 227, 240, 0.7), 0 0 50px 20px rgba(209, 232, 221, 0.45)",
+                    "0 0 30px 11px rgba(209, 232, 221, 0.65), 0 0 55px 22px rgba(184, 207, 197, 0.5)",
+                    "0 0 22px 9px rgba(216, 204, 230, 0.6), 0 0 45px 18px rgba(207, 227, 240, 0.4)",
+                  ],
+                }}
+              >
+                <img
+                  src="/src/public/Male1.png"
+                  alt="AI Agent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setNotesOpen(false);
+                  }}
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
             </div>
-          </motion.button>
-        )}
+          ) : (
+            <div className="relative">
+              {/* Bubble pored avatara kada je panel zatvoren */}
+              <AnimatePresence>
+                {showBubble && (
+                  <motion.div
+                    key="bubble-closed"
+                    initial={{ opacity: 0, scale: 0, x: -20 }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      x: 0,
+                      y: [0, -8, -8, 0, 0] // 0 -> gore -8 -> pauza -> dolje 0 -> pauza
+                    }}
+                    exit={{ opacity: 0, scale: 0, x: -20 }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 500,
+                      damping: 25,
+                      y: {
+                        duration: 3,
+                        repeat: Infinity,
+                        times: [0, 0.3, 0.5, 0.8, 1], // Vremenski trenuci za svaku poziciju
+                        ease: "easeInOut"
+                      }
+                    }}
+                    className="absolute left-full top-1/2 transform z-50"
+                  >
+                    <div className="relative">
+                      <div
+                        className="rounded-2xl px-4 py-3 shadow-2xl"
+                        style={{ backgroundColor: "#D8E9F4" }}
+                      >
+                        <p className="text-sm font-semibold text-black whitespace-nowrap">
+                          Let's talk! 💬
+                        </p>
+                      </div>
+                      {/* Strelica ka avataru */}
+                      <div className="absolute right-full top-1/2 transform w-0 h-0 border-t-4 border-t-transparent border-b-4 border-b-transparent border-r-8 border-r-[#D8E9F4]"></div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Avatar kada je panel zatvoren */}
+              <motion.button
+                type="button"
+                layoutId="session-avatar"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ delay: 0.15 }}
+                onClick={() => setNotesOpen(true)}
+                className="relative mt-20 mb-6 rounded-full focus:outline-none focus-visible:ring-4 focus-visible:ring-[var(--focus-outline)] cursor-pointer"
+                aria-label="Open notes panel"
+              >
+                {/* Glowing background effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-full "
+                  animate={{
+                    boxShadow: [
+                      "0 0 20px 10px rgba(139, 127, 184, 0.4)",
+                      "0 0 40px 20px rgba(139, 127, 184, 0.6)",
+                      "0 0 20px 10px rgba(139, 127, 184, 0.4)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(139, 127, 184, 0.3) 0%, transparent 70%)",
+                  }}
+                />
+                <div className="relative w-35 h-35 sm:w-35 sm:h-35 rounded-full overflow-hidden shadow-2xl ring-white/20 transition-transform">
+                  <img
+                    src="/src/public/Male1.png"
+                    alt="AI Agent"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </motion.button>
+            </div>
+          )}
+        </AnimatePresence>
 
         {/* Tekst — dodatno spušten; još niže kad je chat otvoren */}
         <motion.div
@@ -440,9 +525,8 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0 }}
-          className={`text-center max-w-2xl w-full ${
-            notesOpen ? "mt-0" : "mt-0"
-          }`}
+          className={`text-center max-w-2xl w-full ${notesOpen ? "mt-0" : "mt-0"
+            }`}
         >
           <h2
             className="mb-4 text-2xl font-light"

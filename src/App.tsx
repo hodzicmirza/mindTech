@@ -9,6 +9,7 @@ import { WellBeingTest } from "./components/WellBeingTest";
 import { AnalysisReport } from "./components/AnalysisReport";
 import { BookingFlow } from "./components/BookingFlow";
 import { Dashboard } from "./components/Dashboard";
+import ReactPlayer from 'react-player';
 
 type Screen =
   | "landing"
@@ -22,6 +23,7 @@ type Screen =
   | "dashboard";
 
 type ActivityType = "problem-cards" | "self-esteem" | "well-being";
+
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>("landing");
@@ -93,10 +95,20 @@ export default function App() {
   };
 
   return (
+
     <div
+
       className="min-h-screen"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
+      <ReactPlayer
+        src={"/src/public/RelaxingBackgroundMusic.mp3"} // Path to your audio file
+        playing={true} // Start playing
+        loop={true}   // Continuous playback
+        volume={0.1}  // Set desired volume
+        height="0"    // Hide the player
+        width="0"
+      />
       {currentScreen === "landing" && (
         <div className="min-h-screen flex items-center justify-center px-4">
           <LandingTrustExercise onStart={handleLandingComplete} />
