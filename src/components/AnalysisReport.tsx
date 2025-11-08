@@ -50,6 +50,9 @@ export function AnalysisReport({
 
   // Get questions - either from predefined data or custom questions
   const getQuestions = () => {
+    if (testType !== "problem-cards") {
+      return [];
+    }
     if (isCustomProblem && problem) {
       const customQuestions = getCustomQuestions(problem);
       return customQuestions || [];
@@ -75,21 +78,106 @@ export function AnalysisReport({
     return found ? found[field] : undefined;
   };
 
-  const emotionalPatterns = [
-    getAnswerField(0, "description"),
-    getAnswerField(1, "description"),
-    getAnswerField(2, "description"),
-    getAnswerField(3, "description"),
-    getAnswerField(4, "description"),
-  ].filter((pattern): pattern is string => pattern !== undefined);
+  // Generate insights for self-esteem test
+  const getSelfEsteemInsights = () => {
+    const numAnswers = answers.map(Number);
+    const avgScore = numAnswers.reduce((a, b) => a + b, 0) / numAnswers.length;
+    
+    const patterns: string[] = [];
+    const focuses: string[] = [];
 
-  const focusAreas = [
-    getAnswerField(0, "suggestion"),
-    getAnswerField(1, "suggestion"),
-    getAnswerField(2, "suggestion"),
-    getAnswerField(3, "suggestion"),
-    getAnswerField(4, "suggestion"),
-  ].filter((area): area is string => area !== undefined);
+    if (avgScore <= 1.5) {
+      patterns.push("You show strong self-confidence and positive self-regard.");
+      patterns.push("You generally feel satisfied with who you are as a person.");
+      patterns.push("You recognize your own worth and capabilities.");
+      focuses.push("Continue building on your positive self-image through self-reflection");
+      focuses.push("Explore ways to maintain healthy self-esteem during challenges");
+      focuses.push("Consider how to support others in their self-esteem journey");
+    } else if (avgScore <= 2.5) {
+      patterns.push("You have a generally positive view of yourself with some areas of self-doubt.");
+      patterns.push("You're working on accepting yourself while recognizing room for growth.");
+      patterns.push("You show awareness of both your strengths and areas to develop.");
+      focuses.push("Strengthen positive self-talk and challenge negative thoughts");
+      focuses.push("Identify and celebrate your accomplishments, big and small");
+      focuses.push("Explore the origins of self-doubt and work on reframing beliefs");
+    } else {
+      patterns.push("You're experiencing challenges with self-worth and self-acceptance.");
+      patterns.push("You may have difficulty recognizing your positive qualities.");
+      patterns.push("Your inner critic may be particularly active right now.");
+      focuses.push("Develop compassionate self-talk and challenge harsh self-judgments");
+      focuses.push("Work on identifying and acknowledging your strengths and achievements");
+      focuses.push("Explore core beliefs about yourself and where they originated");
+      focuses.push("Practice self-compassion exercises and mindfulness techniques");
+    }
+
+    return { patterns, focuses };
+  };
+
+  // Generate insights for well-being test
+  const getWellBeingInsights = () => {
+    const numAnswers = answers.map(Number);
+    const totalScore = numAnswers.reduce((a, b) => a + b, 0);
+    
+    const patterns: string[] = [];
+    const focuses: string[] = [];
+
+    if (totalScore <= 7) {
+      patterns.push("You're experiencing significant challenges with your well-being.");
+      patterns.push("Your mood and energy levels may be consistently low.");
+      patterns.push("Daily activities might feel overwhelming or unmanageable.");
+      focuses.push("Consider reaching out to a mental health professional for support");
+      focuses.push("Explore strategies for managing daily stress and building small routines");
+      focuses.push("Work on identifying activities that bring even small moments of comfort");
+      focuses.push("Discuss potential underlying factors affecting your well-being");
+    } else if (totalScore <= 13) {
+      patterns.push("Your well-being shows room for improvement in several areas.");
+      patterns.push("You experience a mix of positive and challenging days.");
+      patterns.push("Some aspects of daily life feel manageable while others are difficult.");
+      focuses.push("Identify specific areas of life that need more attention and support");
+      focuses.push("Develop coping strategies for managing stress and low mood");
+      focuses.push("Explore lifestyle changes that could enhance your sense of well-being");
+      focuses.push("Work on building consistent self-care practices");
+    } else {
+      patterns.push("You're experiencing good overall well-being and life satisfaction.");
+      patterns.push("You generally feel capable and energized in your daily life.");
+      patterns.push("You have positive emotional experiences most of the time.");
+      focuses.push("Maintain your current wellness practices and identify what works best");
+      focuses.push("Explore ways to deepen your sense of purpose and fulfillment");
+      focuses.push("Consider how to navigate challenges while preserving your well-being");
+    }
+
+    return { patterns, focuses };
+  };
+
+  // Get patterns and focus areas based on test type
+  let emotionalPatterns: string[] = [];
+  let focusAreas: string[] = [];
+
+  if (testType === "problem-cards") {
+    emotionalPatterns = [
+      getAnswerField(0, "description"),
+      getAnswerField(1, "description"),
+      getAnswerField(2, "description"),
+      getAnswerField(3, "description"),
+      getAnswerField(4, "description"),
+    ].filter((pattern): pattern is string => pattern !== undefined);
+
+    focusAreas = [
+      getAnswerField(0, "suggestion"),
+      getAnswerField(1, "suggestion"),
+      getAnswerField(2, "suggestion"),
+      getAnswerField(3, "suggestion"),
+      getAnswerField(4, "suggestion"),
+    ].filter((area): area is string => area !== undefined);
+  } else if (testType === "self-esteem") {
+    const insights = getSelfEsteemInsights();
+    emotionalPatterns = insights.patterns;
+    focusAreas = insights.focuses;
+  } else if (testType === "well-being") {
+    const insights = getWellBeingInsights();
+    emotionalPatterns = insights.patterns;
+    focusAreas = insights.focuses;
+  }
 
   const talkingPoints = [
     /* `Explored feelings about ${problem || "personal growth"}`,
