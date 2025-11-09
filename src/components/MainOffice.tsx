@@ -201,69 +201,64 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
       />
 
       {/* Top Navigation */}
-      <nav className="absolute top-1 left-1 z-60 flex items-center justify-between p-6 w-full">
-        
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3"
-        >
-          <div
-            className="w-18 h-18 rounded-2xl flex items-center justify-center overflow-hidden"
-            style={{ backgroundColor: "var(--color-lavender)" }}
-          >
-            <img
-              src="/ashe.png"
-              alt="ASHE"
-              className="w-50 h-50 object-contain"
-            />
-          </div>
-          <div>
-            <h1
-              className="text-xl font-light"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Introduction To Self Help
-            </h1>
-            <p
-              className="text-xs font-light"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Your safe space
-            </p>
-          </div>
-        </motion.div>
+      <nav className="absolute top-0 left-0 z-60 flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 w-full">
+  {/* Logo + tekst – vidi se samo od sm ekrana naviše */}
+  <motion.div
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    className="hidden sm:flex items-center gap-3 mb-2 sm:mb-0"
+  >
+    <div
+      className="w-12 h-12 sm:w-18 sm:h-18 rounded-2xl flex items-center justify-center overflow-hidden"
+      style={{ backgroundColor: "var(--color-lavender)" }}
+    >
+      <img
+        src="/ashe.png"
+        alt="ASHE"
+        className="w-8 h-8 sm:w-50 sm:h-50 object-contain"
+      />
+    </div>
+    <div>
+      <h1 className="text-lg sm:text-xl font-light" style={{ color: "var(--text-primary)" }}>
+        Introduction To Self Help
+      </h1>
+      <p className="text-xs font-light" style={{ color: "var(--text-secondary)" }}>
+        Your safe space
+      </p>
+    </div>
+  </motion.div>
 
-        {/* Avatar Switch Button */}
-        <motion.button
-          onClick={toggleAvatar}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="flex items-center z-50 gap-2 px-3 py-2 rounded-full backdrop-blur-sm transition-all cursor-pointer"
-          style={{
-            backgroundColor: "var(--bg-card)",
-            boxShadow: "var(--shadow-sm)",
-            border: "1px solid var(--bg-hover)"
-          }}
-          title={`Switch to ${currentAvatar === "male" ? "female" : "male"} avatar`}
-        >
-          <motion.div
-            key={currentAvatar}
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
-            {currentAvatar === "male" ? (
-              <User className="w-4 h-4" style={{ color: "var(--text-primary)" }} />
-            ) : (
-              <Users className="w-4 h-4" style={{ color: "var(--text-primary)" }} />
-            )}
-          </motion.div>
-          <span className="text-xs font-light" style={{ color: "var(--text-primary)" }}>
-            {currentAvatar === "male" ? "Male" : "Female"}
-          </span>
-        </motion.button>
-      </nav>
+  {/* Avatar switch dugme – vidi se samo na većim ekranima */}
+  <motion.button
+    onClick={toggleAvatar}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="hidden sm:flex items-center z-50 gap-2 px-3 py-2 rounded-full backdrop-blur-sm transition-all cursor-pointer"
+    style={{
+      backgroundColor: "var(--bg-card)",
+      boxShadow: "var(--shadow-sm)",
+      border: "1px solid var(--bg-hover)",
+    }}
+    title={`Switch to ${currentAvatar === "male" ? "female" : "male"} avatar`}
+  >
+    <motion.div
+      key={currentAvatar}
+      initial={{ scale: 0.8, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+    >
+      {currentAvatar === "male" ? (
+        <User className="w-4 h-4" style={{ color: "var(--text-primary)" }} />
+      ) : (
+        <Users className="w-4 h-4" style={{ color: "var(--text-primary)" }} />
+      )}
+    </motion.div>
+    <span className="text-xs font-light" style={{ color: "var(--text-primary)" }}>
+      {currentAvatar === "male" ? "Male" : "Female"}
+    </span>
+  </motion.button>
+</nav>
+
 
       {/* Chat panel */}
       <motion.aside
@@ -584,24 +579,34 @@ export function MainOffice({ onActivitySelect }: MainOfficeProps) {
               className="absolute -inset-6 sm:-inset-8 rounded-4xl sm:rounded-[3rem]"
             />
             <div
-              className="relative flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-8 justify-center p-6 sm:p-10"
-            >
-              {activities.map((activity, index) => (
-                <motion.div
-                  key={activity.id}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.35 }}
-                >
-                  <ActivityCard
-                    title={activity.title}
-                    icon={activity.icon}
-                    color={activity.color}
-                    onClick={() => onActivitySelect(activity.id)}
-                  />
-                </motion.div>
-              ))}
-            </div>
+  className="
+    grid 
+    grid-cols-1 sm:grid-cols-2 
+    gap-6 sm:gap-8 
+    justify-items-center 
+    content-center 
+    mx-auto 
+    max-w-md sm:max-w-2xl
+    p-4 sm:p-8
+  "
+>
+  {activities.map((activity, index) => (
+    <motion.div
+      key={activity.id}
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.35 }}
+    >
+      <ActivityCard
+        title={activity.title}
+        icon={activity.icon}
+        color={activity.color}
+        onClick={() => onActivitySelect(activity.id)}
+      />
+    </motion.div>
+  ))}
+</div>
+
           </div>
         </motion.div>
 

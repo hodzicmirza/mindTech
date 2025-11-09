@@ -83,7 +83,7 @@ export function ProblemSelection({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-gray-500/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 bg-gray-500/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto"
       onClick={onClose}
     >
       <motion.div
@@ -91,7 +91,7 @@ export function ProblemSelection({
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="bg-white rounded-3xl p-8 max-w-2xl w-full relative shadow-2xl"
+        className="bg-white rounded-3xl p-4 sm:p-8 max-w-2xl w-full relative shadow-2xl my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close button */}
@@ -107,15 +107,15 @@ export function ProblemSelection({
         </button>
 
         {/* Header */}
-        <div className="mb-8 pr-12">
+        <div className="mb-6 sm:mb-8 pr-8 sm:pr-12">
           <h2
-            className="text-2xl font-light mb-3"
+            className="text-xl sm:text-2xl font-light mb-2 sm:mb-3"
             style={{ color: "var(--text-primary)" }}
           >
             What do you want to work on today?
           </h2>
           <p
-            className="text-base font-light"
+            className="text-sm sm:text-base font-light"
             style={{ color: "var(--text-secondary)" }}
           >
             Select an area you'd like to explore. This helps personalize your
@@ -124,7 +124,7 @@ export function ProblemSelection({
         </div>
 
         {/* Problem cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 mb-6">
           {problems.map((problem) => {
             const Icon = problem.icon;
             const isSelected = selectedProblem === problem.id;
